@@ -48,7 +48,7 @@ enough for now.
 
 We used hoppscotch.io to tried out our API, and here is a sample GET from Weather API.
 
-![img.png](img/API%20try%20by%20hoppscotch.png "screenshot")
+![img.png](img/TorontoWeatherResult.png "screenshot")
 
 ## Sample output of Java code (Test):
 
