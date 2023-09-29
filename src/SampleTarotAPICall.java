@@ -1,18 +1,20 @@
 import okhttp3.*;
 
-public class tarot{
+import java.io.IOException;
+import java.util.function.ToIntFunction;
+
+public class SampleTarotAPICall {
     public static void main(String[] args) {
-        int card_num = 1;
 
         OkHttpClient client = new OkHttpClient();
 
         // Draw one card from the deck. Construct an api link from tarot api.
-        String apiURL = "https://tarot-api-3hv5.onrender.com/api/v1/cards/random?n=" + card_num;
+        String apiURL = "https://tarot-api-3hv5.onrender.com/api/v1/cards/random?n=1";
 
             Request request = new Request.Builder()
                     .url(apiURL)
                     .build();
-            try {s
+            try {
                 Response response = client.newCall(request).execute();
 
                 if (response.isSuccessful()) {
