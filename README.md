@@ -46,10 +46,9 @@ enough for now.
 
 **Example Screenshot**
 
+![img.png](img.png "screenshot")
 
-
-## Sample Output of Java code (Test)
-
+## Sample output of Java code (Test):
 
 ## Issues that may slow down development progress:
 
