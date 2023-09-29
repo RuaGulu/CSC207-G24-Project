@@ -46,9 +46,19 @@ enough for now.
 
 **Example Screenshot**
 
-We used hoppscotch.io to tried out our API, and here is a sample GET from Weather API and Tarot API.
+We used hoppscotch.io to tried out our API, and here is a sample GET from Weather API for location of Toronto.
 
 ![img.png](img/TorontoWeatherResults.png "screenshot")
+
+**Tarot API**
+
+We connected with an open source Tarot database API.
+
+**Tarot API Documentation URL: https://github.com/ekelen/tarot-api**
+
+**Example Screenshot**
+
+We used hoppscotch.io to tried out our API, and here is a sample GET from Tarot API.
 
 ![img.png](img/TarotAPI.png "screenshot")
 
