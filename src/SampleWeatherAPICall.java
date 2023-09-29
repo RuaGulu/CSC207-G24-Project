@@ -1,9 +1,8 @@
 import okhttp3.*;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
 
-public class SampleAPICall {
+public class SampleWeatherAPICall {
     public static void main(String[] args) {
         // Here is using Alice's API Key.
         String apiKey = "ec9198023c8a4fd9a8904131232909";
