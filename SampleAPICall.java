@@ -5,8 +5,10 @@ import java.net.HttpURLConnection;
 
 public class SampleAPICall {
     public static void main(String[] args) {
+        // Here is using Alice's API Key.
         String apiKey = "ec9198023c8a4fd9a8904131232909";
-        String city = "Toronto";
+        // Postal Code only need first three characters.
+        String city = "M5G";
 
         OkHttpClient client = new OkHttpClient();
 
