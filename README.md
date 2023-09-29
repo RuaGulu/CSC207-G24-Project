@@ -64,6 +64,10 @@ We used hoppscotch.io to tried out our API, and here is a sample GET from Tarot 
 
 ## Sample output of Java code (Test):
 
+Here is a sample output of the Java Code when calling Weather API.
+
+![img.png](img/WeatherAPICallOutput.png "screenshot")
+
 ## Issues that may slow down development progress:
 
 - APIs are no longer free or not available, that we have to switch to another source.
