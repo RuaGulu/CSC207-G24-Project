@@ -35,6 +35,8 @@ The user will get notified based on his preference in different weathers, temper
 
 In addition, we decide to provide a feature of Tarot Cards, to suggest user what is suitable to do for today.
 
+- The App will be implemented in Java.
+
 - The App will contain register feature.
 
 - There will be four menus at the bottom: Weather, Calendar, Tarot, ME.
