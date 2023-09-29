@@ -46,9 +46,11 @@ enough for now.
 
 **Example Screenshot**
 
-We used hoppscotch.io to tried out our API, and here is a sample GET from Weather API.
+We used hoppscotch.io to tried out our API, and here is a sample GET from Weather API and Tarot API.
 
-![img.png](img/TorontoWeatherResult.png "screenshot")
+![img.png](img/TorontoWeatherResults.png "screenshot")
+
+![img.png](img/TarotAPI.png "screenshot")
 
 ## Sample output of Java code (Test):
 
