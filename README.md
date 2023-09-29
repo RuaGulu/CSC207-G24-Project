@@ -36,7 +36,7 @@
 
 ## API
 
-**Weather API**
+### **Weather API**
 
 We connected with Weather API from weatherapi.com, which is an API can help us get detailed weather conditions for both
 now and future forecast. We have chose this API as it is free for us to try out first with limited information but
@@ -50,7 +50,7 @@ We used hoppscotch.io to tried out our API, and here is a sample GET from Weathe
 
 ![img.png](img/TorontoWeatherResults.png "screenshot")
 
-**Tarot API**
+### **Tarot API**
 
 We connected with an open source Tarot database API.
 
