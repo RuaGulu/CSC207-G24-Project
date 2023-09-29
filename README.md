@@ -27,7 +27,19 @@
 - **(Not Decided Yet)** Use of an API access to Tarot Card Reading.
   
 
-## Application Type
+## Application Category and Description
+
+We are focusing on developing a Weather Utility App integrated with much features that based on the user's preferences.
+
+The user will get notified based on his preference in different weathers, temperatures, interests, and locations.
+
+In addition, we decide to provide a feature of Tarot Cards, to suggest user what is suitable to do for today.
+
+- The App will contain register feature.
+
+- There will be four menus at the bottom: Weather, Calendar, Tarot, ME.
+
+### **App Categories**
 
 - **Personal Life**
 
@@ -40,7 +52,7 @@
 
 We connected with Weather API from weatherapi.com, which is an API can help us get detailed weather conditions for both
 now and future forecast. We have chose this API as it is free for us to try out first with limited information but
-enough for now.
+enough for early development.
 
 **Weather API Documentation URL: https://www.weatherapi.com/docs/**
 
@@ -48,11 +60,11 @@ enough for now.
 
 We used hoppscotch.io to tried out our API, and here is a sample GET from Weather API for location of Toronto.
 
-![img.png](img/TorontoWeatherResults.png "screenshot")
+![img.png](img/TorontoWeatherResults.png)
 
 ### **Tarot API**
 
-We connected with an open source Tarot database API.
+We connected with an open source Tarot database API, which contains Tarot Cards with explaination.
 
 **Tarot API Documentation URL: https://github.com/ekelen/tarot-api**
 
@@ -60,13 +72,13 @@ We connected with an open source Tarot database API.
 
 We used hoppscotch.io to tried out our API, and here is a sample GET from Tarot API.
 
-![img.png](img/TarotAPI.png "screenshot")
+![img.png](img/TarotAPI.png)
 
 ## Sample output of Java code (Test):
 
 Here is a sample output of the Java Code when calling Weather API.
 
-![img.png](img/WeatherAPICallOutput.png "screenshot")
+![img.png](img/WeatherAPICallOutput.png)
 
 ## Issues that may slow down development progress:
 
