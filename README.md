@@ -89,3 +89,5 @@ Here is a sample output of the Java Code when calling Weather API.
 - Time needed to implement new features, and finding information for features.
 
 - Time consuming to implement personal preferences setup.
+
+- No prior experience for Java development, looking for documents and debugging will be a lot.
