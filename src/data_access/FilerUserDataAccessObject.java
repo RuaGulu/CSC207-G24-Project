@@ -3,13 +3,14 @@ package data_access;
 import entity.User;
 import entity.UserFactory;
 import use_case.login.LoginUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FilerUserDataAccessObject implements LoginUserDataAccessInterface {
+public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface {
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -33,7 +34,7 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface {
                     String[] col = row.split(",");
                     String username = String.valueOf(col[headers.get("username")]);
                     String location = String.valueOf(col[headers.get("location")]);
-                    User user = userFactory.create(username, location);
+                    User user = userFactory.create(username, location,null,null);
                     accounts.put(username,user);
                 }
 
