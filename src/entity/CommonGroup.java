@@ -2,8 +2,8 @@ package entity;
 
 import java.time.LocalDateTime;
 
-class CommonGroup implements Group{
-
+public class CommonGroup implements Group{
+  
     private final String name;
 
     private final String[] member;

@@ -8,4 +8,4 @@ public interface Group {
     String getMembers();
 
     LocalDateTime getCreationTime();
-    }
+}
