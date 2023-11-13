@@ -69,8 +69,8 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s",
-                        user.getUsername());
+                String line = String.format("%s,%s",
+                        user.getUsername(),user.getLocation());
                 writer.write(line);
                 writer.newLine();
             }
