@@ -2,10 +2,15 @@ package entity;
 
 import java.time.LocalDateTime;
 
-public interface Group {
+public interface Trip {
+
     String getName();
 
-    String getMembers();
+    String getPassword();
+
+    String getTripName();
+
+    String[] getUser();
 
     LocalDateTime getCreationTime();
 }
