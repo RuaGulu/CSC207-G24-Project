@@ -1,6 +1,7 @@
 package use_case.trip;
 
-// TODO
 public interface TripOutputBoundary {
+    void prepareSuccessView(TripOutputData tripOutputData);
 
+    void prepareFailView(String error);
 }

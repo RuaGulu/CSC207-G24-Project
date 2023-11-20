@@ -1,26 +1,13 @@
 package use_case.trip;
 
-// TODO
 public class TripInputData {
-    final private String tripName;
-    final private String password;
-    final private String repeatPassword;
+    private final String tripId;
 
-    public TripInputData(String tripName, String password, String repeatPassword) {
-        this.tripName = tripName;
-        this.password = password;
-        this.repeatPassword = repeatPassword;
+    public TripInputData(String tripId) {
+        this.tripId = tripId;
     }
 
-    String getTripName() {
-        return tripName;
-    }
-
-    String getPassword() {
-        return password;
-    }
-
-    public String getRepeatPassword() {
-        return repeatPassword;
+    public String getTripId() {
+        return tripId;
     }
 }
