@@ -2,7 +2,6 @@ package interface_adapter.logged_in;
 
 public class LoggedInState {
 
-
     private String username = "";
     private String location = "";
 
@@ -23,7 +22,4 @@ public class LoggedInState {
     public void setLocation(String location) {
         this.location = location;
     }
-
-
-
 }
