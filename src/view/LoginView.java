@@ -12,7 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "Frame";
+    public final String viewName = "log in";
     private final JTextField username = new JFormattedTextField(15);
     private final LoginController controller;
     private final LoginViewModel viewModel;
