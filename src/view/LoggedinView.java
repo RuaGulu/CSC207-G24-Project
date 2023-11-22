@@ -50,7 +50,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         WeatherState currentState = weatherViewModel.getState();
-                        weatherController.execute(currentState.getUsername());
+                        weatherController.execute(currentState.getLocation());
 
 
 
