@@ -26,5 +26,5 @@ public class CommonGroup implements Group{
         return sb.toString();
     }
 
-    public LocalDateTime getCreationTime() {return creationTime};
+    public LocalDateTime getCreationTime() {return creationTime;}
 }
