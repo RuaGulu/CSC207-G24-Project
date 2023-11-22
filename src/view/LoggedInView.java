@@ -1,8 +1,11 @@
 package view;
 
-import interface_adapter.logged_in.LoggedInState;
+import entity.Weather;
+import interface_adapter.logged_in.LoggedInController;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.signup.SignupViewModel;
+import interface_adapter.weather.WeatherController;
+import interface_adapter.weather.WeatherState;
+import interface_adapter.weather.WeatherViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,66 +13,80 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
-public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener{
-
+public class LoggedinView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "logged in";
+    private final JTextField username = new JFormattedTextField(15);
+    private final LoggedInController loggedinController;
+    private final LoggedInViewModel viewModel;
 
-    private final LoggedInViewModel loggedInViewModel;
+    private final WeatherController weatherController;
+    private final WeatherViewModel weatherViewModel;
 
-    JLabel username;
+    private final JTextField usernameInputField = new JTextField(15);
 
-    JLabel location;
-
-    final JButton weather;
-
-
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
-        this.loggedInViewModel = loggedInViewModel;
-        this.loggedInViewModel.addPropertyChangeListener(this);
+    private final JButton getWeather;
 
 
-        JLabel title = new JLabel("LoggedInScreen");
+
+
+    public LoggedinView(LoggedInController controller, LoggedInViewModel viewModel, WeatherController weatherController, WeatherViewModel weatherViewModel){
+        this.loggedinController = controller;
+        this.viewModel = viewModel;
+        viewModel.addPropertyChangeListener(this);
+
+        this.weatherController = weatherController;
+        this.weatherViewModel = weatherViewModel;
+
+        JLabel title = new JLabel(viewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JLabel usernameInfo = new JLabel("Username:");
-        username = new JLabel();
-        JLabel locationInfo = new JLabel("Location:");
-        location = new JLabel();
+        LabelTextPanel usernameInfo = new LabelTextPanel(new JLabel(), usernameInputField);
 
-        JPanel buttons = new JPanel();
-        weather = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
-        buttons.add(weather);
+        JPanel button = new JPanel();
+        getWeather = new JButton("Get Weather");
+        button.add(getWeather);
+        getWeather.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        WeatherState currentState = weatherViewModel.getState();
+                        weatherController.execute(currentState.getUsername());
 
 
+
+                        }
+
+                }
+        );
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         this.add(title);
-        this.add(username);
-        this.add(location);
-        this.add(buttons);
-        // add the weather panel
-        // add the groups panel
-            // this means the groups are stored somewhere, will need to call them to display
-            // not sure how groups are stored yet, so haven't coded yet
-            // likely called in input data or login presenter -unsure right now
+        this.add(usernameInfo);
+        this.add(button);
+        this.setVisible(true);
 
 
 
     }
 
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Click " + e.getActionCommand());
+
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LoggedInState state = (LoggedInState) evt.getNewValue();
-        username.setText(state.getUsername());
-        location.setText(state.getLocation());
+        System.out.println("到达loggedinview");
+        if (evt.getNewValue().equals("loggedin")){
+            WeatherState state = (WeatherState) evt.getNewValue();
+            Weather weather = state.getWeather();
+            String str = "Weather Condition: " + weather.getCondition() + "\t"
+                    + "Weather Temperature (C)" + weather.getTempC() + "\t"
+                    + "Weather Temperature (F)"+ weather.getTempF() + "\t"
+                    + "Local Time" + weather.getTime();
 
-
+            JOptionPane.showMessageDialog(this, str);
     }
-}
+}}
+
