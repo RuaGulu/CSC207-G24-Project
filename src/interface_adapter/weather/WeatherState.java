@@ -29,6 +29,7 @@ public class WeatherState {
     }
 
     public void setWeather(Weather weather){this.weather = weather;}
+    public Weather getWeather(){return this.weather;}
 
     public void setUsernameError(String usernameError) {
         this.usernameError = usernameError;
