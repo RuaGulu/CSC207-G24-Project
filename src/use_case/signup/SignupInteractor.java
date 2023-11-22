@@ -24,12 +24,7 @@ public class SignupInteractor implements SignupInputBoundary{
         if(userDataAccessObject.existsByName(signupInputData.getUsername())) {
             userPresenter.prepareFailView("User already exists");
         } else {
-            LocalDateTime now = LocalDateTime.now();
-            CommonUser user = userFactory.create(signupInputData.getUsername(), signupInputData.getLocation(), now);
-            userDataAccessObject.save(user);
 
-            SignupOutputData signupOutputData = new SignupOutputData(user.getName(), now.toString(), false);
-            userPresenter.prepareSuccessView(signupOutputData);
         }
     }
 
