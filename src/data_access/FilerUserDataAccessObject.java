@@ -1,5 +1,6 @@
 package data_access;
 
+import entity.CommonUser;
 import entity.User;
 import entity.UserFactory;
 import use_case.login.LoginUserDataAccessInterface;
@@ -49,11 +50,11 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
         return accounts.containsKey(identifier);
     }
 
+
     @Override
     public void save(User user) {
         accounts.put(user.getUsername(),user);
         this.save();
-
     }
 
     @Override
@@ -78,7 +79,7 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
             writer.close();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to save user to CSV.", e);
         }
     }
 }
