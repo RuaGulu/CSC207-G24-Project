@@ -9,6 +9,8 @@ public class WeatherState {
     private Weather weather;
     private String usernameError = null;
 
+    private String location = "";
+
 
     public WeatherState(WeatherState copy){
         username = copy.username;
@@ -28,7 +30,13 @@ public class WeatherState {
         this.username = username;
     }
 
+    public Weather getWeather() {return weather;}
+
     public void setWeather(Weather weather){this.weather = weather;}
+
+    public void setLocation(String location) {this.location = location;}
+
+    public String getLocation() {return location;}
 
     public void setUsernameError(String usernameError) {
         this.usernameError = usernameError;
