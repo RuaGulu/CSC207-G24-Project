@@ -1,4 +1,4 @@
-package use_case.weather;
+package use_case.Weather;
 
 public interface WeatherInputBoundary {
 

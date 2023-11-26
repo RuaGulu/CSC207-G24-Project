@@ -1,7 +1,8 @@
-package use_case.weather;
+package use_case.Weather;
 
 import api.WeatherDB;
 import entity.CommonUser;
+
 
 public class WeatherInteractor implements WeatherInputBoundary{
 
