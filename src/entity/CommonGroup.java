@@ -1,27 +1,30 @@
 package entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CommonGroup implements Group{
+public class CommonGroup implements Group {
   
     private final String name;
 
-    private final String[] member;
+    private final List<User> member = new ArrayList<>();
 
     private final LocalDateTime creationTime;
 
-    CommonGroup(String name, String[] member, LocalDateTime creationTime){
+    CommonGroup(String name, User member, LocalDateTime creationTime){
         this.name = name;
-        this.member = member;
+        this.member.add(member);
         this.creationTime = creationTime;
     }
+
 
     public String getName() {return name;}
 
     public String getMembers(){
         StringBuilder sb = new StringBuilder();
-        for (String s : member) {
-            sb.append(s);
+        for (User s : member) {
+            sb.append(s.getUsername());
         }
         return sb.toString();
     }
