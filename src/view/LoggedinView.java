@@ -23,7 +23,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
     private final WeatherController weatherController;
     private final WeatherViewModel weatherViewModel;
 
-    private final JTextField usernameInputField = new JTextField(15);
+    private final JTextField weatherInputField = new JTextField(15);
 
     private final JButton getWeather;
 
@@ -40,7 +40,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
 
         JLabel title = new JLabel(viewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        LabelTextPanel usernameInfo = new LabelTextPanel(new JLabel(), usernameInputField);
+        LabelTextPanel weatherInfo = new LabelTextPanel(new JLabel(LoggedInViewModel.WEATHER_LABEL), weatherInputField);
 
         JPanel button = new JPanel();
         getWeather = new JButton("Get Weather");
@@ -60,7 +60,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
         );
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(usernameInfo);
+        this.add(weatherInfo);
         this.add(button);
         this.setVisible(true);
 
@@ -81,9 +81,9 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
         if (evt.getNewValue().equals("loggedin")){
             WeatherState state = (WeatherState) evt.getNewValue();
             Weather weather = state.getWeather();
-            String str = "Weather Condition: " + weather.getCondition() + "\t"
-                    + "Weather Temperature (C)" + weather.getTempC() + "\t"
-                    + "Weather Temperature (F)"+ weather.getTempF() + "\t"
+            String str = "Weather Condition: " + weather.getCondition() + "\n"
+                    + "Weather Temperature (C)" + weather.getTempC() + "\n"
+                    + "Weather Temperature (F)"+ weather.getTempF() + "\n"
                     + "Local Time" + weather.getTime();
 
             JOptionPane.showMessageDialog(this, str);
