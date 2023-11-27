@@ -9,7 +9,7 @@ public class CommonUserFactory implements UserFactory{
      * @return
      */
     @Override
-    public User create(String name, String location, String hometown, Group group) {
+    public User create(String name, String location, String hometown, String group) {
         return new CommonUser(name,location,hometown, group);
     }
 }

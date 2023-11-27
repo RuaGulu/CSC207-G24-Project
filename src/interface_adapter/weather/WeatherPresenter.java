@@ -6,21 +6,27 @@ import use_case.Weather.WeatherOutputBoundary;
 import use_case.Weather.WeatherOutputData;
 
 public class WeatherPresenter implements WeatherOutputBoundary {
-    private final WeatherViewModel viewModel;
+    private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
+
+    private final WeatherViewModel weatherViewModel;
 
     public WeatherPresenter(ViewManagerModel viewManagerModel, WeatherViewModel weatherViewModel, LoggedInViewModel loggedInViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.viewModel = weatherViewModel;
+        this.loggedInViewModel = loggedInViewModel;
+        this.weatherViewModel = weatherViewModel;
+
     }
 
     @Override
     public void prepareSuccessView(WeatherOutputData weather) {
-        WeatherState state = viewModel.getState();
+        WeatherState state = weatherViewModel.getState();
         state.setWeather(weather.getWeather());
-        this.viewModel.setState(state);
-        this.viewModel.firePropertyChanged();
-        this.viewManagerModel.setActiveView(viewModel.getViewName());
+        //
+        System.out.println("Weather presenter");
+        this.weatherViewModel.setState(state);
+        this.loggedInViewModel.firePropertyChanged();
+        this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
 
 

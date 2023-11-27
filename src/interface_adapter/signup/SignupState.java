@@ -5,6 +5,8 @@ public class SignupState {
     private String username = "";
     private String usernameError = null;
     private String location = "";
+
+    private String group = "";
     private String locationError = null;
 
     public SignupState(SignupState copy) {
@@ -41,11 +43,20 @@ public class SignupState {
         this.locationError = locationError;
     }
 
+    public void setGroup(String group){
+        this.group = group;
+    }
+
+    public String getGroup(){
+        return group;
+    }
+
     @Override
     public String toString() {
         return "SignupState{" +
                 "username='" + username + '\'' +
                 ", location='" + location + '\'' +
+                ", group='" + group + '\'' +
                 '}';
     }
 }

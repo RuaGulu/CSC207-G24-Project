@@ -1,11 +1,16 @@
 package app;
 
+import api.APIDataAccessObject;
+import api.WeatherDB;
 import data_access.FilerUserDataAccessObject;
+import entity.CommonGroupFactory;
 import entity.CommonUserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.weather.WeatherViewModel;
+import view.LoggedinView;
 import view.LoginView;
 import view.SignupView;
 import view.ViewManager;
@@ -30,25 +35,35 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedinViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        WeatherViewModel weatherViewModel = new WeatherViewModel();
 
         FilerUserDataAccessObject userDataAccessObject;
+        FilerUserDataAccessObject loginUserDataAccessObject;
+        FilerUserDataAccessObject loggedInUserDataAccessObject;
+        WeatherDB weatherDataAccessObject;
 
         try {
-            userDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory());
+            userDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(), new CommonGroupFactory());
+            loginUserDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(),new CommonGroupFactory());
+            loggedInUserDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(),new CommonGroupFactory());
+            weatherDataAccessObject = new APIDataAccessObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel );
         views.add(signupView,signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel);
         views.add(loginView,loginView.viewName);
+
+        LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel,loggedInUserDataAccessObject,weatherDataAccessObject);
+        views.add(loggedinView,loggedinView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
-
+        application.setLocation(675,386);
         application.pack();
         application.setVisible(true);
 
