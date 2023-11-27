@@ -1,6 +1,5 @@
 package use_case.create_group;
 
-import data_access.FilerUserDataAccessObject;
 import entity.*;
 import use_case.login.LoginUserDataAccessInterface;
 
@@ -24,20 +23,24 @@ public class CreateGroupInteractor implements CreatGroupInputBoundary {
         this.getUser = getUser;
     }
 
-    public void execute(CreateGroupInputData groupInputData, String username) {
+    public void execute(CreateGroupInputData groupInputData) {
+        String username = groupInputData.getUser();
         String group_name = groupInputData.getGroupname();
+        if (!getUser.existsByName(username)){
+            CreateGroupPresenter.prepareFailView(username + ": User does not exist");
+        }
+        User user = getUser.get(username);
         if (groupDataAccessObject.existsByName(group_name)) {
-            CreateGroupPresenter.prepareFailView(group_name + ": The group has already been created.");
-        } else {
-            if (!getUser.existsByName(username)){
-                CreateGroupPresenter.prepareFailView(username + ": User does not exist");
-            }
-            else{
-                User user = getUser.get(username);
+            Group group = groupDataAccessObject.get(group_name);
+            group.addmember(user);
+            groupDataAccessObject.updateGroup(group_name, group);
+            user.addgroup(group);
+            getUser.updateuser(username, user);
+        }
+        else{
                 LocalDateTime now = LocalDateTime.now();
                 Group group = groupFactory.create(groupInputData.getGroupname(), user, now);
                 groupDataAccessObject.save(group);
             }
-        }
     }
 }

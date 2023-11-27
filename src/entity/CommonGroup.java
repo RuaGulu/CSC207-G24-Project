@@ -18,6 +18,9 @@ public class CommonGroup implements Group {
         this.creationTime = creationTime;
     }
 
+    public void addmember(User user){
+       this.member.add(user);
+    }
 
     public String getName() {return name;}
 

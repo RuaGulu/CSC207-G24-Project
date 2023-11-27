@@ -11,13 +11,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileGroupDataAccessObject implements GroupDataAccessInterface {
+public class FilerGroupDataAccessObject implements GroupDataAccessInterface {
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
     private final Map<String, Group> groups = new HashMap<>();
     private GroupFactory groupFactory;
 
-    public FileGroupDataAccessObject(String csvPath, GroupFactory groupFactory) throws IOException {
+    public FilerGroupDataAccessObject(String csvPath, GroupFactory groupFactory) throws IOException {
         this.groupFactory = groupFactory;
         csvFile = new File(csvPath);
         headers.put("groupname", 0);
@@ -61,6 +61,14 @@ public class FileGroupDataAccessObject implements GroupDataAccessInterface {
         return groups.get(groupname);
     }
 
+    public void updateGroup(String groupname, Group updatedGroup) {
+
+        // Update the group in the map
+        groups.put(groupname, updatedGroup);
+
+        // Save the updated groups map to the CSV file
+        save();
+    }
     private void save() {
         BufferedWriter writer;
         try {

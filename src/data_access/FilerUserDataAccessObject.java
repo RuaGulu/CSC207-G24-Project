@@ -1,6 +1,7 @@
 package data_access;
 
 import entity.CommonUser;
+import entity.Group;
 import entity.User;
 import entity.UserFactory;
 import use_case.login.LoginUserDataAccessInterface;
@@ -61,7 +62,14 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
     public User get(String username) {
         return accounts.get(username);
     }
+    public void updateuser(String username, User updatedUser) {
 
+        // Update the group in the map
+        accounts.put(username, updatedUser);
+
+        // Save the updated groups map to the CSV file
+        save();
+    }
     private void save() {
         BufferedWriter writer;
         try {
