@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 public class LoggedInViewModel extends ViewModel {
 
     public final String TITLE_LABEL = "Logged In View";
+    public static final String WEATHER_LABEL = "Location (IATA Airport Code)";
 
     private LoggedInState state = new LoggedInState();
 

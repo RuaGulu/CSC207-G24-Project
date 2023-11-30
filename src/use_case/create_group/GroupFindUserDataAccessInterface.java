@@ -1,10 +1,9 @@
-package use_case.login;
+package use_case.create_group;
 
 import entity.User;
 
-public interface LoginUserDataAccessInterface {
+public interface GroupFindUserDataAccessInterface {
     boolean existsByName(String identifier);
-    void save(User user);
     User get(String username);
     void updateuser(String username, User updatedUser);
 }
