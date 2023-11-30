@@ -1,6 +1,5 @@
 package use_case.create_group;
 
-import data_access.FilerUserDataAccessObject;
 import entity.*;
 import use_case.login.LoginUserDataAccessInterface;
 
@@ -15,29 +14,36 @@ public class CreateGroupInteractor implements CreatGroupInputBoundary {
 
     final GroupFactory groupFactory;
 
-    final LoginUserDataAccessInterface getUser;
+    final GroupFindUserDataAccessInterface getUser;
 
-    public CreateGroupInteractor(GroupDataAccessInterface groupDataAccessObject, CreateGroupOutputBoundary CreateGroupPresenter, GroupFactory groupFactory, LoginUserDataAccessInterface getUser) {
+    public CreateGroupInteractor(GroupDataAccessInterface groupDataAccessObject, CreateGroupOutputBoundary CreateGroupPresenter, GroupFactory groupFactory, GroupFindUserDataAccessInterface getUser) {
         this.groupDataAccessObject = groupDataAccessObject;
         this.CreateGroupPresenter = CreateGroupPresenter;
         this.groupFactory = groupFactory;
         this.getUser = getUser;
     }
 
-    public void execute(CreateGroupInputData groupInputData, String username) {
+    public void execute(CreateGroupInputData groupInputData) {
+        String username = groupInputData.getUser();
         String group_name = groupInputData.getGroupname();
-        if (groupDataAccessObject.existsByName(group_name)) {
-            CreateGroupPresenter.prepareFailView(group_name + ": The group has already been created.");
-        } else {
-            if (!getUser.existsByName(username)){
-                CreateGroupPresenter.prepareFailView(username + ": User does not exist");
-            }
-            else{
-                User user = getUser.get(username);
-                LocalDateTime now = LocalDateTime.now();
-                Group group = groupFactory.create(groupInputData.getGroupname(), user, now);
-                groupDataAccessObject.save(group);
-            }
+        if (!getUser.existsByName(username)){
+            CreateGroupPresenter.prepareFailView(username + ": User does not exist");
         }
+        User user = getUser.get(username);
+        CreateGroupOutputData createGroupOutputData = new CreateGroupOutputData(group_name, false);
+        if (groupDataAccessObject.existsByName(group_name)) {
+            Group group = groupDataAccessObject.get(group_name);
+            group.addmember(username);
+            groupDataAccessObject.updateGroup(group_name, group);
+            user.addgroup(group);
+            getUser.updateuser(username, user);
+            CreateGroupPresenter.prepareSuccessView(createGroupOutputData);
+        }
+        else{
+            LocalDateTime now = LocalDateTime.now();
+            Group group = groupFactory.create(groupInputData.getGroupname(), username, now);
+            groupDataAccessObject.save(group);
+            CreateGroupPresenter.prepareSuccessView(createGroupOutputData);
+            }
     }
 }

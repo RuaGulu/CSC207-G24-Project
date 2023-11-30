@@ -1,9 +1,14 @@
 package view;
 
 
+import entity.CommonGroup;
+import entity.Group;
 import interface_adapter.create_group.CreateGroupController;
 import interface_adapter.create_group.CreateGroupState;
 import interface_adapter.create_group.CreateGroupViewModel;
+import interface_adapter.search_usergroup.SearchGroupState;
+import interface_adapter.search_usergroup.SearchUserGroupController;
+import interface_adapter.search_usergroup.SearchUserGroupViewModel;
 import interface_adapter.signup.SignupState;
 
 
@@ -15,15 +20,21 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 public class GroupView extends JPanel implements ActionListener, PropertyChangeListener {
+    public final String viewName = "create group";
     private final CreateGroupViewModel creategroupViewModel;
     private final JTextField groupnameInputField = new JTextField(15);
     private final JLabel groupnameErrorField = new JLabel();
     private final JTextField userInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
+    private final JTextField groupSearchInputField = new JTextField(15);
+    private final JLabel groupSearchErrorField = new JLabel();
     private final CreateGroupController creategroupController;
     // private final ClearGroupController clearController;
+    private final SearchUserGroupController searchUserGroupController;
+    private final SearchUserGroupViewModel searchUserGroupViewModel;
 
     private final JButton create;
     private final JButton cancel;
@@ -33,11 +44,16 @@ public class GroupView extends JPanel implements ActionListener, PropertyChangeL
     LabelTextPanel usernameInfo = new LabelTextPanel(
             new JLabel(CreateGroupViewModel.USERNAME_LABEL), userInputField);
     // private final JButton delete;
-    public GroupView(CreateGroupController controller, CreateGroupViewModel creategroupViewModel) {
+    LabelTextPanel groupSearchInfo = new LabelTextPanel(
+            new JLabel(CreateGroupViewModel.GROUPNAME_LABEL), groupnameInputField);
+    public GroupView(CreateGroupController controller, SearchUserGroupController searchUserGroupController, CreateGroupViewModel creategroupViewModel, SearchUserGroupViewModel searchUserGroupViewModel) {
 
         this.creategroupController = controller;
         this.creategroupViewModel = creategroupViewModel;
         creategroupViewModel.addPropertyChangeListener(this);
+
+        this.searchUserGroupController = searchUserGroupController;
+        this.searchUserGroupViewModel = searchUserGroupViewModel;
 
         JLabel title = new JLabel(CreateGroupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -63,6 +79,11 @@ public class GroupView extends JPanel implements ActionListener, PropertyChangeL
                             creategroupController.execute(
                                     currentState.getGroupname(),
                                     currentState.getUser()
+                            );
+                            SearchGroupState searchState = searchUserGroupViewModel.getState();
+
+                            searchUserGroupController.execute(
+                                    searchState.getUsername()
                             );
                         }
                     }
@@ -126,10 +147,16 @@ public class GroupView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("state")) {
-            SignupState state = (SignupState) evt.getNewValue();
-            if (state.getUsernameError() != null) {
-                JOptionPane.showMessageDialog(this, state.getUsernameError());
+        if (evt.getPropertyName().equals("CreateGroupState")) {
+            CreateGroupState state = (CreateGroupState) evt.getNewValue();
+            SearchGroupState searchstate = (SearchGroupState) evt.getNewValue();
+            if (state.getUserError() != null) {
+                JOptionPane.showMessageDialog(this, state.getUserError());
+            }
+            else {
+                List<Group> group = searchstate.getGroup();
+                String str = "The user " + searchstate.getUsername() + " is currently in group " + group.toString();
+                JOptionPane.showMessageDialog(this, str);
             }
         }
     }
