@@ -18,9 +18,8 @@ public class CommonUser implements User{
         return username;
     }
 
-    public String getLocation(){
+    public String getLocation() {
         return location;
-
     }
 
     @Override
