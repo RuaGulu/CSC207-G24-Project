@@ -5,6 +5,7 @@ import entity.GroupFactory;
 import entity.User;
 import entity.UserFactory;
 import use_case.create_group.GroupDataAccessInterface;
+import java.time.LocalDateTime;
 
 import java.io.*;
 import java.util.HashMap;
@@ -25,7 +26,9 @@ public class FilerGroupDataAccessObject implements GroupDataAccessInterface {
 
         if (csvFile.length() == 0){
             save();
-        }else{
+        }
+
+        else{
             try(BufferedReader reader = new BufferedReader(new FileReader(csvFile))){
                 String header = reader.readLine();
                 assert header.equals("groupname,group");
@@ -34,8 +37,8 @@ public class FilerGroupDataAccessObject implements GroupDataAccessInterface {
                     String[] col = row.split(",");
                     String groupname = String.valueOf(col[headers.get("groupname")]);
                     // Please check if users represent users list for the group.
-                    String users = String.valueOf(col[headers.get("users")]);
-                    Group group = groupFactory.create(groupname, users);
+                    String username = String.valueOf(col[headers.get("username")]);
+                    Group group = groupFactory.create(groupname, username, LocalDateTime.now());
                     groups.put(groupname, group);
                 }
 

@@ -7,7 +7,7 @@ public interface Group {
 
     String getMembers();
 
-    void addmember(User user);
+    void addmember(String member);
 
     LocalDateTime getCreationTime();
 }

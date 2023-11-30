@@ -10,7 +10,7 @@ public class CommonGroupFactory implements GroupFactory{
          * @param creationTime
          * @return
          */
-    public Group create( String name, User member, LocalDateTime creationTime){
+    public Group create( String name, String member, LocalDateTime creationTime){
         return new CommonGroup(name, member, creationTime);
     }
 }

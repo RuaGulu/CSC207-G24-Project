@@ -28,6 +28,8 @@ public class CommonUser implements User{
         this.group.add(group);
     }
 
+    public List<Group> getGroup(){return group;}
+
     @Override
     public String change_location() {
         return null;

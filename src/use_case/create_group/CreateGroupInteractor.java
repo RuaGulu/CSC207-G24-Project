@@ -14,9 +14,9 @@ public class CreateGroupInteractor implements CreatGroupInputBoundary {
 
     final GroupFactory groupFactory;
 
-    final LoginUserDataAccessInterface getUser;
+    final GroupFindUserDataAccessInterface getUser;
 
-    public CreateGroupInteractor(GroupDataAccessInterface groupDataAccessObject, CreateGroupOutputBoundary CreateGroupPresenter, GroupFactory groupFactory, LoginUserDataAccessInterface getUser) {
+    public CreateGroupInteractor(GroupDataAccessInterface groupDataAccessObject, CreateGroupOutputBoundary CreateGroupPresenter, GroupFactory groupFactory, GroupFindUserDataAccessInterface getUser) {
         this.groupDataAccessObject = groupDataAccessObject;
         this.CreateGroupPresenter = CreateGroupPresenter;
         this.groupFactory = groupFactory;
@@ -30,17 +30,20 @@ public class CreateGroupInteractor implements CreatGroupInputBoundary {
             CreateGroupPresenter.prepareFailView(username + ": User does not exist");
         }
         User user = getUser.get(username);
+        CreateGroupOutputData createGroupOutputData = new CreateGroupOutputData(group_name, false);
         if (groupDataAccessObject.existsByName(group_name)) {
             Group group = groupDataAccessObject.get(group_name);
-            group.addmember(user);
+            group.addmember(username);
             groupDataAccessObject.updateGroup(group_name, group);
             user.addgroup(group);
             getUser.updateuser(username, user);
+            CreateGroupPresenter.prepareSuccessView(createGroupOutputData);
         }
         else{
-                LocalDateTime now = LocalDateTime.now();
-                Group group = groupFactory.create(groupInputData.getGroupname(), user, now);
-                groupDataAccessObject.save(group);
+            LocalDateTime now = LocalDateTime.now();
+            Group group = groupFactory.create(groupInputData.getGroupname(), username, now);
+            groupDataAccessObject.save(group);
+            CreateGroupPresenter.prepareSuccessView(createGroupOutputData);
             }
     }
 }
