@@ -33,7 +33,7 @@ public class CreateGroupState {
     public void setGroupname(String Groupname) {
         this.groupname = groupname;
     }
-
+    public void setUser(String user){this.user = user;}
     public void setGroupnameError(String groupnameError) {
         this.groupnameError = groupnameError;
     }
