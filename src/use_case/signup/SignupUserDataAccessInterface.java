@@ -9,7 +9,7 @@ public interface SignupUserDataAccessInterface {
 
     boolean existsByGroup(String identifier);
 
-    void save(User user, Group group);
+    void save(User user);
 
     Group getGroup(String group);
 

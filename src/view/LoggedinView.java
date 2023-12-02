@@ -1,6 +1,10 @@
 package view;
 
 import entity.Weather;
+import interface_adapter.group.GroupController;
+import interface_adapter.group.GroupState;
+import interface_adapter.group.GroupViewModel;
+import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.weather.WeatherController;
 import interface_adapter.weather.WeatherState;
@@ -14,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 
 public class LoggedinView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "logged in";
@@ -23,27 +28,27 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
     private final WeatherController weatherController;
     private final WeatherViewModel weatherViewModel;
 
-//    private final GroupController groupController;
-//    private final GroupViewModel groupViewModel;
+    private final GroupController groupController;
+    private final GroupViewModel groupViewModel;
 
     private final JTextField usernameInputField = new JTextField(15);
 
     private final JButton getWeather;
 
-    private final JButton createGroup;
+    private final JButton group;
 
 
 
 
-    public LoggedinView(LoggedInViewModel viewModel, WeatherController weatherController, WeatherViewModel weatherViewModel){
+    public LoggedinView(LoggedInViewModel viewModel, WeatherController weatherController, WeatherViewModel weatherViewModel, GroupViewModel groupViewModel, GroupController groupController){
         this.viewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
 
         this.weatherController = weatherController;
         this.weatherViewModel = weatherViewModel;
 
-//        this.groupViewModel = groupViewModel;
-//        this.groupController = groupController;
+        this.groupViewModel = groupViewModel;
+        this.groupController = groupController;
 
         JLabel title = new JLabel(viewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -88,14 +93,16 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
                 }
         );
 
-        createGroup = new JButton("Group");
-        button.add(createGroup);
-        createGroup.addActionListener(
+        group = new JButton("Get Group");
+        button.add(group);
+        group.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-//                        GroupState state = groupViewModel.getState();
-//                        groupController.execute(state);
+                        LoggedInState lastState = viewModel.getState();
+                        GroupState state = groupViewModel.getState();
+                        state.setUser(lastState.getUsername());
+                        groupController.execute(state.getUser(),lastState.getLocation());
                     }
                 }
 
@@ -126,14 +133,37 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
         //
         System.out.println("到达loggedinview");
         System.out.println(evt.getPropertyName());
+        System.out.println(evt.getNewValue().getClass());
+
+        System.out.println("=====");
+        LoggedInState loggedInState = viewModel.getState();
+        if (loggedInState.getProperty() == "group"){
+            GroupState state = groupViewModel.getState();
+            HashMap<String, HashMap<String,Weather>> data = state.getData();
+            //
+            System.out.println(state.getData().size());
+            String str = "";
+            for (String groupName : data.keySet()){
+                HashMap<String,Weather> users = data.get(groupName);
+                str += "Group " + groupName + " : " + "\n";
+                for(String user : users.keySet()){
+                    str += user + " : " + users.get(user).getLocation() + "\n"
+                            + "Weather Condition: " + users.get(user).getCondition() + "\n"
+                            + "Weather Temperature (C)" + users.get(user).getTempC() + "\n"
+                            + "Weather Temperature (F)"+ users.get(user).getTempF() + "\n"
+                            + "Local Time" + users.get(user).getTime() + "\n";
+                }
+            }
+            JOptionPane.showMessageDialog(this,str);
+        }
         WeatherState state = weatherViewModel.getState();
         System.out.println(state.getWeather());
 
-        if (state.getWeather() != null){
+        if (loggedInState.getProperty() == "weather"){
             Weather weather = state.getWeather();
-            String str = "Weather Condition: " + weather.getCondition() + "\t"
-                    + "Weather Temperature (C)" + weather.getTempC() + "\t"
-                    + "Weather Temperature (F)"+ weather.getTempF() + "\t"
+            String str = "Weather Condition: " + weather.getCondition() + "\n"
+                    + "Weather Temperature (C)" + weather.getTempC() + "\n"
+                    + "Weather Temperature (F)"+ weather.getTempF() + "\n"
                     + "Local Time" + weather.getTime();
 
             JOptionPane.showMessageDialog(this, str);

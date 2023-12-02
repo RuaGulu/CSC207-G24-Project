@@ -13,6 +13,7 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.weather.WeatherViewModel;
+import use_case.group.GroupDataAccessInterface;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -30,11 +31,11 @@ public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {}
 
     public static SignupView create(
-            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject, LoginUserDataAccessInterface loginuserDataAccessObject, LoggedInViewModel loggedInViewModel, WeatherViewModel weatherViewModel) {
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject, LoginUserDataAccessInterface loginuserDataAccessObject, LoggedInViewModel loggedInViewModel, WeatherViewModel weatherViewModel, GroupDataAccessInterface groupDataAccessInterface) {
 
         try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
-            LoginController loginController = createUserLoginUseCase(viewManagerModel,loggedInViewModel,loginViewModel,loginuserDataAccessObject, weatherViewModel);
+            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject,groupDataAccessInterface);
+            LoginController loginController = createUserLoginUseCase(viewManagerModel,loggedInViewModel,loginViewModel,loginuserDataAccessObject, weatherViewModel,groupDataAccessInterface);
             return new SignupView(signupController, signupViewModel, loginController, loginViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -42,7 +43,7 @@ public class SignupUseCaseFactory {
 
         return null;
     }
-    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject) throws IOException {
+    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject, GroupDataAccessInterface groupDataAccessInterface) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
@@ -52,19 +53,19 @@ public class SignupUseCaseFactory {
         GroupFactory groupFactory = new CommonGroupFactory();
 
         SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory,groupFactory);
+                userDataAccessObject, signupOutputBoundary, userFactory,groupFactory,groupDataAccessInterface);
 
         return new SignupController(userSignupInteractor);
     }
-    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, LoginViewModel loginViewModel, LoginUserDataAccessInterface loginUserDataAccessObject, WeatherViewModel weatherViewModel) throws IOException {
+    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, LoginViewModel loginViewModel, LoginUserDataAccessInterface loginUserDataAccessObject, WeatherViewModel weatherViewModel, GroupDataAccessInterface groupDataAccessInterface) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,loggedInViewModel,loginViewModel,weatherViewModel);
 
-        UserFactory userFactory = new CommonUserFactory();
+        GroupFactory groupFactory = new CommonGroupFactory();
 
         LoginInputBoundary loginInputBoundary = new LoginInteractor(
-                loginUserDataAccessObject, loginOutputBoundary);
+                loginUserDataAccessObject, loginOutputBoundary,groupFactory,groupDataAccessInterface);
 
         return new LoginController(loginInputBoundary);
     }

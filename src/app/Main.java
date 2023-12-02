@@ -3,9 +3,11 @@ package app;
 import api.APIDataAccessObject;
 import api.WeatherDB;
 import data_access.FilerUserDataAccessObject;
+import data_access.GroupDataAccessObject;
 import entity.CommonGroupFactory;
 import entity.CommonUserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.group.GroupViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
@@ -36,28 +38,31 @@ public class Main {
         LoggedInViewModel loggedinViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         WeatherViewModel weatherViewModel = new WeatherViewModel();
+        GroupViewModel groupViewModel = new GroupViewModel();
 
         FilerUserDataAccessObject userDataAccessObject;
         FilerUserDataAccessObject loginUserDataAccessObject;
         FilerUserDataAccessObject loggedInUserDataAccessObject;
+        GroupDataAccessObject groupDataAccessObject;
         WeatherDB weatherDataAccessObject;
 
         try {
             userDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(), new CommonGroupFactory());
             loginUserDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(),new CommonGroupFactory());
             loggedInUserDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(),new CommonGroupFactory());
+            groupDataAccessObject = new GroupDataAccessObject("./groups.csv",new CommonGroupFactory(),new CommonUserFactory());
             weatherDataAccessObject = new APIDataAccessObject();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel );
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel,groupDataAccessObject );
         views.add(signupView,signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel,groupDataAccessObject);
         views.add(loginView,loginView.viewName);
 
-        LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel,loggedInUserDataAccessObject,weatherDataAccessObject);
+        LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel,loggedInUserDataAccessObject,weatherDataAccessObject,groupViewModel,groupDataAccessObject);
         views.add(loggedinView,loggedinView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

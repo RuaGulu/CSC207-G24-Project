@@ -19,8 +19,6 @@ public class WeatherInteractor implements WeatherInputBoundary{
     @Override
     public void execute(WeatherInputData weatherInputData) {
         WeatherOutputData weatherOutputData = new WeatherOutputData(weatherDataAccesObject.getWeather(weatherInputData.getLocation()));
-        //
-        System.out.println(weatherOutputData.getWeather().getCondition());
         weatherPresenter.prepareSuccessView(weatherOutputData);
     }
 }

@@ -9,6 +9,8 @@ public class SignupState {
     private String group = "";
     private String locationError = null;
 
+    private boolean isNewGroup = true;
+
     public SignupState(SignupState copy) {
         username = copy.username;
         usernameError = copy.usernameError;
@@ -50,6 +52,10 @@ public class SignupState {
     public String getGroup(){
         return group;
     }
+
+    public void joinGroup(){this.isNewGroup = false; }
+
+    public boolean getGroupCondition(){return isNewGroup;}
 
     @Override
     public String toString() {

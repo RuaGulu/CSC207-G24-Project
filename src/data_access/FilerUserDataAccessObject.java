@@ -9,12 +9,11 @@ import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface, LoggedInUserDataAccessinterface {
+public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface, LoggedInUserDataAccessinterface{
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -30,7 +29,6 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
         csvFile = new File(csvPath);
         headers.put("username", 0);
         headers.put("location", 1);
-        headers.put("lead_group", 1);
 
         if (csvFile.length() == 0){
             save();
@@ -43,15 +41,8 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
                     String[] col = row.split(",");
                     String username = String.valueOf(col[headers.get("username")]);
                     String location = String.valueOf(col[headers.get("location")]);
-                    String lead_group = String.valueOf(col[headers.get("lead_group")]);
-                    LocalDateTime now = LocalDateTime.now();
                     User user = userFactory.create(username, location,null,null);
-                    if (lead_group != null){
-                        Group group = groupFactory.create(lead_group,user,now);
-                        groups.put(lead_group,group);
-                    }
                     accounts.put(username,user);
-
                 }
 
             }
@@ -72,15 +63,10 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
 
 
     @Override
-    public void save(User user, Group group) {
+    public void save(User user) {
         accounts.put(user.getUsername(),user);
-        if (group != null){
-            groups.put(group.getName(), group);
-        }
         this.save();
-
     }
-
 
     @Override
     public User get(String username) {
@@ -88,6 +74,7 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
     }
 
     public Group getGroup(String group){return groups.get(group);}
+
 
     private void save() {
         BufferedWriter writer;
@@ -99,8 +86,8 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
             for (User user : accounts.values()) {
                 String line;
                 if (user.getGroupName() != null){
-                    line = String.format("%s,%s,%s",
-                            user.getUsername(),user.getLocation(),user.getGroupName());
+                    line = String.format("%s,%s",
+                            user.getUsername(),user.getLocation());
                 }else{
                     line = String.format("%s,%s",
                             user.getUsername(),user.getLocation());
@@ -116,5 +103,7 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
             throw new RuntimeException(e);
         }
     }
+
+
 }
 

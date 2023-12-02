@@ -27,7 +27,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JTextField usernameInputField = new JTextField(15);
     private final JTextField locationInputField = new JTextField(15);
 
-    private final JTextField groupInputField = new JTextField(15);
+    private final JTextField createGroupInputField = new JTextField(15);
+
+    private final JTextField joinGroupInputField = new JTextField(15);
 
     private final SignupController signupController;
 
@@ -54,6 +56,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
         LabelTextPanel locationInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.LOCATION_LABEL), locationInputField);
+        LabelTextPanel createGroupInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.SIGNUP_CREATE_GROUP_LABEL), createGroupInputField);
+        LabelTextPanel jointGroupInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.SIGNUP_JOIN_GROUP_LABEL), joinGroupInputField);
 
         // buttons
         JPanel buttons = new JPanel();
@@ -77,7 +83,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                             signupController.execute(
                                     currentState.getUsername(),
                                     currentState.getLocation(),
-                                    currentState.getGroup()
+                                    currentState.getGroup(),
+                                    currentState.getGroupCondition()
                             );
 
                         }
@@ -94,7 +101,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         //
                         currentState.setUsername(lastState.getUsername());
                         currentState.setLocation(lastState.getLocation());
-                        loginController.execute(currentState.getUsername(),null, "log in");
+                        loginController.execute(currentState.getUsername(),null, lastState.getGroup(), "log in", lastState.getGroupCondition());
 
 
                     }
@@ -141,12 +148,14 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     }
                 });
 
-        groupInputField.addKeyListener(
+        createGroupInputField.addKeyListener(
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
                         SignupState currentState = signupViewModel.getState();
-                        String text = groupInputField.getText() + e.getKeyChar();
+                        String text = createGroupInputField.getText() + e.getKeyChar();
+                        //
+                        System.out.println(text);
                         currentState.setGroup(text);
                         signupViewModel.setState(currentState);
                     }
@@ -162,12 +171,42 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     }
                 }
         );
+
+        joinGroupInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        SignupState currentState = signupViewModel.getState();
+                        String text = joinGroupInputField.getText() + e.getKeyChar();
+                        //
+                        System.out.println(text);
+
+                        currentState.setGroup(text);
+                        currentState.joinGroup();
+                        signupViewModel.setState(currentState);
+
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
+                    }
+                }
+        );
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 
         this.add(title);
         this.add(usernameInfo);
         this.add(locationInfo);
+        this.add(createGroupInfo);
+        this.add(jointGroupInfo);
         this.add(buttons);}
 
     public void actionPerformed(ActionEvent evt) {
@@ -183,10 +222,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 //            if (state.getUsernameError() != null) {
 //                JOptionPane.showMessageDialog(this, state.getUsernameError());
 
-        } else if (evt.getPropertyName().equals("login")) {
-                LoginState loginstate = (LoginState) evt.getNewValue();
-                if (loginstate.getUsernameError() != null) {
-                    JOptionPane.showMessageDialog(this, loginstate.getUsernameError());
+        } else if (evt.getPropertyName().equals("signup")) {
+                SignupState state = (SignupState) evt.getNewValue();
+                if (state.getUsernameError() != null) {
+                    JOptionPane.showMessageDialog(this, state.getUsernameError());
             }}
     }
 }

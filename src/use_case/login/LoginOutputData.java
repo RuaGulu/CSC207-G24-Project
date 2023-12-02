@@ -6,10 +6,13 @@ public class LoginOutputData {
     private final String location;
     private boolean useCaseFailed;
 
-    public LoginOutputData(String username, String location, boolean useCaseFailed) {
+    private final String groupName;
+
+    public LoginOutputData(String username, String location, String groupName, boolean useCaseFailed) {
         this.username = username;
         this.useCaseFailed = useCaseFailed;
         this.location = location;
+        this.groupName = groupName;
     }
 
     public String getUsername() {
@@ -17,4 +20,6 @@ public class LoginOutputData {
     }
 
     public String getLocation(){return location;}
+
+    public String getGroupName(){return groupName;}
 }

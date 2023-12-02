@@ -7,10 +7,13 @@ public class SignupInputData {
 
     final private String group;
 
-    public SignupInputData(String username, String location, String group) {
+    final private boolean isNewGroup;
+
+    public SignupInputData(String username, String location, String group, boolean isNewGroup) {
         this.username = username;
         this.location = location;
         this.group = group;
+        this.isNewGroup = isNewGroup;
     }
 
     String getUsername() {return username;}
@@ -20,4 +23,6 @@ public class SignupInputData {
     String getGroup(){
         return group;
     }
+
+    boolean isNewGroup(){return isNewGroup;}
 }

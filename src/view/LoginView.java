@@ -37,12 +37,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         login = new JButton(viewModel.LOGIN_BUTTON);
         button.add(login);
         login.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(login)) {
                             LoginState currentState = viewModel.getState();
-                            controller.execute(currentState.getUsername(),currentState.getLocation(), "sign up");
+                            controller.execute(currentState.getUsername(),currentState.getLocation(),currentState.getGroup(), "sign up",false);
                         }
                     }
                 }

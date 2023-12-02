@@ -6,6 +6,8 @@ public class LoginState {
     private String location = "";
     private String usernameError = null;
 
+    private String group = "";
+
 
     public LoginState(LoginState copy){
         username = copy.username;
@@ -28,6 +30,9 @@ public class LoginState {
     public void setLocation(String location){this.location = location;}
 
     public String getLocation(){return location;}
+
+    public void setGroup(String group){this.group = group;}
+    public String getGroup(){return group;}
 
     public void setUsernameError(String usernameError) {
         this.usernameError = usernameError;

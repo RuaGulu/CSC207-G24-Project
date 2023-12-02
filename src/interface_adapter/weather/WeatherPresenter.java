@@ -1,6 +1,7 @@
 package interface_adapter.weather;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.Weather.WeatherOutputBoundary;
 import use_case.Weather.WeatherOutputData;
@@ -22,8 +23,8 @@ public class WeatherPresenter implements WeatherOutputBoundary {
     public void prepareSuccessView(WeatherOutputData weather) {
         WeatherState state = weatherViewModel.getState();
         state.setWeather(weather.getWeather());
-        //
-        System.out.println("Weather presenter");
+        LoggedInState loggedInState = loggedInViewModel.getState();
+        loggedInState.setProperty("weather");
         this.weatherViewModel.setState(state);
         this.loggedInViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());

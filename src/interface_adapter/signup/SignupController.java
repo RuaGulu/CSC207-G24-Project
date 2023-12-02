@@ -11,8 +11,8 @@ public class SignupController {
         this.userSignupUseCaseInteractor = userSignupUseCaseInteractor;
     }
 
-    public void execute(String username, String location, String group) {
-        SignupInputData signupInputData = new SignupInputData(username, location, group);
+    public void execute(String username, String location, String group, boolean isNewGroup) {
+        SignupInputData signupInputData = new SignupInputData(username, location, group, isNewGroup);
 
         userSignupUseCaseInteractor.execute(signupInputData);
     }
