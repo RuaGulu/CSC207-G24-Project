@@ -1,6 +1,7 @@
 package interface_adapter.weather;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.air_quality.AirQualityState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.Weather.WeatherOutputBoundary;
 import use_case.Weather.WeatherOutputData;
@@ -28,6 +29,9 @@ public class WeatherPresenter implements WeatherOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
+        WeatherState weatherState = viewModel.getState();
+        weatherState.setLocationError(error);
+        viewModel.firePropertyChanged();
 
     }
 }

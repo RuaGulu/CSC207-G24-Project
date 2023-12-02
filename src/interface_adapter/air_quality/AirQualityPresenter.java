@@ -27,6 +27,8 @@ public class AirQualityPresenter implements AirQualityOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-
+        AirQualityState airQualityState = viewModel.getState();
+        airQualityState.setLocationError(error);
+        viewModel.firePropertyChanged();
     }
 }
