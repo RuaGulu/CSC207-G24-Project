@@ -1,8 +1,12 @@
 package data_access;
 
+import entity.CommonUser;
+import entity.Group;
 import entity.User;
 import entity.UserFactory;
+import use_case.create_group.GroupFindUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
+import use_case.search_usergroup.SearchGroupUserDataAccess;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
@@ -10,7 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface {
+public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface, GroupFindUserDataAccessInterface, SearchGroupUserDataAccess {
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -49,18 +53,25 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
         return accounts.containsKey(identifier);
     }
 
+
     @Override
-    public void save(User user) {
+    public void save(CommonUser user) {
         accounts.put(user.getUsername(),user);
         this.save();
-
     }
 
     @Override
     public User get(String username) {
         return accounts.get(username);
     }
+    public void updateuser(String username, User updatedUser) {
 
+        // Update the group in the map
+        accounts.put(username, updatedUser);
+
+        // Save the updated groups map to the CSV file
+        save();
+    }
     private void save() {
         BufferedWriter writer;
         try {
@@ -78,7 +89,7 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
             writer.close();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to save user to CSV.", e);
         }
     }
 }

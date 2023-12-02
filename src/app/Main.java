@@ -7,10 +7,13 @@ import entity.CommonGroupFactory;
 import entity.CommonUserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.air_quality.AirQualityViewModel;
+import interface_adapter.create_group.CreateGroupViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.search_usergroup.SearchUserGroupViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.weather.WeatherViewModel;
+import view.GroupView;
 import view.LoggedinView;
 import view.LoginView;
 import view.SignupView;
@@ -36,19 +39,26 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedinViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        CreateGroupViewModel createGroupViewModel = new CreateGroupViewModel();
+        SearchUserGroupViewModel searchUserGroupViewModel = new SearchUserGroupViewModel();
         WeatherViewModel weatherViewModel = new WeatherViewModel();
         AirQualityViewModel airQualityViewModel = new AirQualityViewModel();
 
         FilerUserDataAccessObject userDataAccessObject;
         FilerUserDataAccessObject loginUserDataAccessObject;
         FilerUserDataAccessObject loggedInUserDataAccessObject;
-        WeatherDB weatherDataAccessObject;
+        FilerUserDataAccessObject groupFindGroupDataAccessObject;
+        FilerUserDataAccessObject searchGroupUserDataAccessObject;
+        FilerGroupDataAccessObject groupDataAccessObject;
 
         try {
-            userDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(), new CommonGroupFactory());
-            loginUserDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(),new CommonGroupFactory());
-            loggedInUserDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(),new CommonGroupFactory());
-            weatherDataAccessObject = new APIDataAccessObject();
+            userDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory());
+            loginUserDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory());
+            loggedInUserDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory());
+            groupFindGroupDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory());
+            searchGroupUserDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory());
+            groupDataAccessObject = new FilerGroupDataAccessObject("./groups.csv", new CommonGroupFactory());
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -61,6 +71,9 @@ public class Main {
 
         LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel, airQualityViewModel, loggedInUserDataAccessObject,weatherDataAccessObject);
         views.add(loggedinView,loggedinView.viewName);
+
+        GroupView groupView = GroupUseCaseFactory.create(viewManagerModel,createGroupViewModel,searchUserGroupViewModel, groupFindGroupDataAccessObject, groupDataAccessObject, searchGroupUserDataAccessObject);
+        views.add(groupView,groupView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
