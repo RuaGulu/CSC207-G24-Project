@@ -1,10 +1,12 @@
 package app;
 
-import data_access.FilerGroupDataAccessObject;
+import api.APIDataAccessObject;
+import api.WeatherDB;
 import data_access.FilerUserDataAccessObject;
 import entity.CommonGroupFactory;
 import entity.CommonUserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.air_quality.AirQualityViewModel;
 import interface_adapter.create_group.CreateGroupViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -40,6 +42,7 @@ public class Main {
         CreateGroupViewModel createGroupViewModel = new CreateGroupViewModel();
         SearchUserGroupViewModel searchUserGroupViewModel = new SearchUserGroupViewModel();
         WeatherViewModel weatherViewModel = new WeatherViewModel();
+        AirQualityViewModel airQualityViewModel = new AirQualityViewModel();
 
         FilerUserDataAccessObject userDataAccessObject;
         FilerUserDataAccessObject loginUserDataAccessObject;
@@ -60,13 +63,14 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel );
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel );
         views.add(signupView,signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel);
         views.add(loginView,loginView.viewName);
 
-        LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel, weatherViewModel, loggedInUserDataAccessObject);
+        LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel, airQualityViewModel, loggedInUserDataAccessObject,weatherDataAccessObject);
+        views.add(loggedinView,loggedinView.viewName);
 
         GroupView groupView = GroupUseCaseFactory.create(viewManagerModel,createGroupViewModel,searchUserGroupViewModel, groupFindGroupDataAccessObject, groupDataAccessObject, searchGroupUserDataAccessObject);
         views.add(groupView,groupView.viewName);
