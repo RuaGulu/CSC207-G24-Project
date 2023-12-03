@@ -1,11 +1,16 @@
 package use_case.signup;
 
-import entity.CommonUser;
+import entity.Group;
+import entity.User;
 
 public interface SignupUserDataAccessInterface {
 
     boolean existsByName(String identifier);
 
-    void save(CommonUser user);
+    boolean existsByGroup(String identifier);
+
+    void save(User user, Group group);
+
+    Group getGroup(String group);
 
 }

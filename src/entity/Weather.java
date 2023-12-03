@@ -64,11 +64,11 @@ public class Weather {
     @Override
     public String toString() {
         return "Weather{" +
-                "location='" + location + '\'' +
-                ", time='" + time + '\'' +
+                "location=" + location + '\'' +
+                ", time=" + time + '\'' +
                 ", tempC=" + tempC + '\'' +
                 ", tempF=" + tempF + '\'' +
-                " condition=" + condition + '\'' +
+                ", condition=" + condition + '\'' +
                 '}';
     }
 

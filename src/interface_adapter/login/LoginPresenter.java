@@ -14,24 +14,29 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
 
     private final WeatherViewModel weatherViewModel;
+
     private ViewManagerModel viewManagerModel;
 
-    public LoginPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, WeatherViewModel weatherViewModel, LoginViewModel loginViewModel) {
+    public LoginPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, LoginViewModel loginViewModel,WeatherViewModel weatherViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
-        this.weatherViewModel = weatherViewModel;
         this.viewManagerModel = viewManagerModel;
+        this.weatherViewModel = weatherViewModel;
     }
 
     @Override
     public void prepareSuccessView(LoginOutputData response) {
         LoggedInState loggedInState = loggedInViewModel.getState();
         loggedInState.setUsername(response.getUsername());
+        //
+        System.out.println("到达login presenter");
+        System.out.println(response.getLocation());
+
+//        WeatherState weatherState = weatherViewModel.getState();
+//        weatherState.setLocation(response.getLocation());
+
         this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChanged();
-
-        WeatherState weatherState = weatherViewModel.getState();
-        weatherState.setLocation(response.getLocation());
         this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
@@ -43,6 +48,3 @@ public class LoginPresenter implements LoginOutputBoundary {
         loginViewModel.firePropertyChanged();
     }
 }
-
-
-

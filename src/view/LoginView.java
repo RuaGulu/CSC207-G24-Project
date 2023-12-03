@@ -19,7 +19,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     private final JTextField usernameInputField = new JTextField(15);
 
-    private final JButton loginIn;
+    private final JButton login;
 
 
 
@@ -34,19 +34,24 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         LabelTextPanel usernameInfo = new LabelTextPanel(new JLabel(viewModel.USERNAME_LABEL),usernameInputField);
 
         JPanel button = new JPanel();
-        loginIn = new JButton(viewModel.LOGIN_BUTTON);
-        button.add(loginIn);
-        loginIn.addActionListener(
+        login = new JButton(viewModel.LOGIN_BUTTON);
+        button.add(login);
+        login.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(loginIn)) {
+                        if (evt.getSource().equals(login)) {
                             LoginState currentState = viewModel.getState();
-                            controller.execute(currentState.getUsername());
+                            controller.execute(currentState.getUsername(),currentState.getLocation(), "sign up");
                         }
                     }
                 }
         );
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(usernameInfo);
+        this.add(button);
 
 
 
@@ -60,6 +65,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        //
+        System.out.println("到达login view");
+        LoginState state = (LoginState) evt.getNewValue();
     }
 }
