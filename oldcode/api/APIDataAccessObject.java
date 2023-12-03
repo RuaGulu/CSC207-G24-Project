@@ -19,7 +19,7 @@ public class APIDataAccessObject implements WeatherDB {
         return API_TOKEN;
     }
 
-    @Override
+@Override
     public Weather getWeather(String location) {
         // Here is using Alice's API Key.
         // Postal Code only need first three characters.
@@ -42,6 +42,7 @@ public class APIDataAccessObject implements WeatherDB {
                 JSONObject current = responseBody.getJSONObject("current");
                 return Weather.builder()
                         .location(loc.getString("name"))
+                        .time(loc.getString("time"))
                         .tempC(current.getInt("temp_c"))
                         .tempF(current.getInt("temp_f"))
                         .condition(current.getJSONObject("condition").getString("text"))
