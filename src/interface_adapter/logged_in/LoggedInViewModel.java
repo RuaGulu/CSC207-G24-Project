@@ -8,6 +8,10 @@ import java.beans.PropertyChangeSupport;
 public class LoggedInViewModel extends ViewModel {
     public final String TITLE_LABEL = "Logged In View";
 
+    public static final String WEATHER_BUTTON = "Get Weather";
+
+    public static final String AIR_BUTTON = "Get Air Quality";
+
     private LoggedInState state = new LoggedInState();
 
     public static final String LOGOUT_BUTTON_LABEL = "Log out";

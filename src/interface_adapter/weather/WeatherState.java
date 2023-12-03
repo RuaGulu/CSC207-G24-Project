@@ -10,11 +10,14 @@ public class WeatherState {
     private String usernameError = null;
 
     private String location = "";
+    private String locationError = null;
 
 
     public WeatherState(WeatherState copy){
         username = copy.username;
         usernameError = copy.usernameError;
+        location = copy.location;
+        locationError = copy.locationError;
     }
     public WeatherState() {}
 
@@ -40,6 +43,20 @@ public class WeatherState {
         this.usernameError = usernameError;
     }
 
+    public String getLocationError() {return locationError;}
+
+    public void setLocationError(String error) {this.locationError = error;}
+
+
+
 }
+
+
+
+
+
+
+
+
 
 

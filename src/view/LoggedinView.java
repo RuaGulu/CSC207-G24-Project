@@ -19,6 +19,9 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
+import interface_adapter.air_quality.AirQualityController;
+import interface_adapter.air_quality.AirQualityState;
+import interface_adapter.air_quality.AirQualityViewModel;
 
 public class LoggedinView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "logged in";
@@ -28,6 +31,10 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
     private final WeatherController weatherController;
     private final WeatherViewModel weatherViewModel;
 
+    private final AirQualityController airQualityController;
+
+    private final AirQualityViewModel airQualityViewModel;
+
     private final GroupController groupController;
     private final GroupViewModel groupViewModel;
 
@@ -36,11 +43,12 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
     private final JButton getWeather;
 
     private final JButton group;
+    private final JButton getAirQuality;
 
 
 
 
-    public LoggedinView(LoggedInViewModel viewModel, WeatherController weatherController, WeatherViewModel weatherViewModel, GroupViewModel groupViewModel, GroupController groupController){
+    public LoggedinView(LoggedInViewModel viewModel, WeatherController weatherController, WeatherViewModel weatherViewModel, AirQualityController airQualityController, AirQualityViewModel airQualityViewModel,GroupViewModel groupViewModel, GroupController groupController){
         this.viewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
 
@@ -49,6 +57,9 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
 
         this.groupViewModel = groupViewModel;
         this.groupController = groupController;
+
+        this.airQualityController = airQualityController;
+        this.airQualityViewModel = airQualityViewModel;
 
         JLabel title = new JLabel(viewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -92,6 +103,17 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
 
                 }
         );
+        getAirQuality = new JButton(LoggedInViewModel.AIR_BUTTON);
+        button.add(getAirQuality);
+        getAirQuality.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt){
+                        AirQualityState currentState = airQualityViewModel.getState();
+                        airQualityController.execute(currentState.getLocation());
+                    }
+                });
+
+
 
         group = new JButton("Get Group");
         button.add(group);

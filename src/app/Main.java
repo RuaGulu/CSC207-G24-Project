@@ -7,6 +7,7 @@ import data_access.GroupDataAccessObject;
 import entity.CommonGroupFactory;
 import entity.CommonUserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.air_quality.AirQualityViewModel;
 import interface_adapter.group.GroupViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -23,6 +24,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
+
         JFrame application = new JFrame("system");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,6 +40,7 @@ public class Main {
         LoggedInViewModel loggedinViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         WeatherViewModel weatherViewModel = new WeatherViewModel();
+        AirQualityViewModel airQualityViewModel = new AirQualityViewModel();
         GroupViewModel groupViewModel = new GroupViewModel();
 
         FilerUserDataAccessObject userDataAccessObject;
@@ -62,7 +65,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel,groupDataAccessObject);
         views.add(loginView,loginView.viewName);
 
-        LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel,loggedInUserDataAccessObject,weatherDataAccessObject,groupViewModel,groupDataAccessObject);
+        LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel,airQualityViewModel,loggedInUserDataAccessObject,weatherDataAccessObject,groupViewModel,groupDataAccessObject);
         views.add(loggedinView,loggedinView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
