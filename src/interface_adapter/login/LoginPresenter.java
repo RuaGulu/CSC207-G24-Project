@@ -1,11 +1,14 @@
 package interface_adapter.login;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.air_quality.AirQualityViewModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.weather.WeatherViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
+import interface_adapter.weather.WeatherState;
+import interface_adapter.air_quality.AirQualityState;
 
 
 public class LoginPresenter implements LoginOutputBoundary {
@@ -14,13 +17,16 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     private final WeatherViewModel weatherViewModel;
 
+    private final AirQualityViewModel airQualityViewModel;
+
     private ViewManagerModel viewManagerModel;
 
-    public LoginPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, LoginViewModel loginViewModel,WeatherViewModel weatherViewModel) {
+    public LoginPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, LoginViewModel loginViewModel,WeatherViewModel weatherViewModel, AirQualityViewModel airQualityViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
         this.viewManagerModel = viewManagerModel;
         this.weatherViewModel = weatherViewModel;
+        this.airQualityViewModel = airQualityViewModel;
     }
 
     @Override
@@ -37,8 +43,11 @@ public class LoginPresenter implements LoginOutputBoundary {
         System.out.println(response.getUsername());
         System.out.println(loginState.getLocation());
 
-//        WeatherState weatherState = weatherViewModel.getState();
-//        weatherState.setLocation(response.getLocation());
+        WeatherState weatherState = weatherViewModel.getState();
+        weatherState.setLocation(response.getLocation());
+
+        AirQualityState airQualityState = airQualityViewModel.getState();
+        airQualityState.setLocation(response.getLocation());
 
         this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChanged();

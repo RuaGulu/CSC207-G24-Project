@@ -24,12 +24,7 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        if (SystemInfo.isMacOS){
-            System.setProperty("apple.laf.useScreenMenuBar","true");
-            System.setProperty("apple.awt.application.name","Weather System");
-            System.setProperty("apple.awt.application.appearance","system");
-        }
-        JFrame.setDefaultLookAndFeelDecorated(true);
+
         JFrame application = new JFrame("system");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,10 +59,10 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel,groupDataAccessObject );
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel,airQualityViewModel,groupDataAccessObject );
         views.add(signupView,signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel,groupDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel, airQualityViewModel,groupDataAccessObject);
         views.add(loginView,loginView.viewName);
 
         LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel,airQualityViewModel,loggedInUserDataAccessObject,weatherDataAccessObject,groupViewModel,groupDataAccessObject);

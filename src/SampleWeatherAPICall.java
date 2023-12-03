@@ -7,7 +7,7 @@ public class SampleWeatherAPICall {
         // Here is using Alice's API Key.
         String apiKey = "ec9198023c8a4fd9a8904131232909";
         // Postal Code only need first three characters.
-        String city = "M5G";
+        String city = "YYZ";
 
         OkHttpClient client = new OkHttpClient();
 
