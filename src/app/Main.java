@@ -66,7 +66,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel,airQualityViewModel,groupDataAccessObject );
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel,airQualityViewModel,groupDataAccessObject,weatherDadaAccessObject );
         views.add(signupView,signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel, airQualityViewModel,groupDataAccessObject);
