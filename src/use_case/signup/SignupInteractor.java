@@ -19,17 +19,20 @@ public class SignupInteractor implements SignupInputBoundary{
     final GroupFactory groupFactory;
 
     final GroupDataAccessInterface groupDataAccessObject;
+    final WeatherDB weatherDataAccsssObject
 
     public SignupInteractor(SignupUserDataAccessInterface signupUserDataAccessInterface,
                             SignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory,
                             GroupFactory groupFactory,
-                            GroupDataAccessInterface groupDataAccessObject) {
+                            GroupDataAccessInterface groupDataAccessObject,
+                           WeatherDB weatherDataAccsssObject) {
         this.userDataAccessObject = signupUserDataAccessInterface;
         this.userPresenter = signupOutputBoundary;
         this.userFactory = userFactory;
         this.groupFactory = groupFactory;
         this.groupDataAccessObject = groupDataAccessObject;
+        this.weatherDataAccsssObject = weatherDataAccsssObject;
     }
 
     @Override
@@ -44,33 +47,27 @@ public class SignupInteractor implements SignupInputBoundary{
             System.out.println(signupInputData.isNewGroup());
             userPresenter.prepareFailView("Group does not exist");
         } else {
-            User user = userFactory.create(signupInputData.getUsername(), signupInputData.getLocation(), null, signupInputData.getGroup());
-            if (!signupInputData.getGroup().equals("")){
-                if (signupInputData.isNewGroup()) {
-                    Group group = groupFactory.create(signupInputData.getGroup(), new ArrayList<>(), LocalDateTime.now());
-                    group.addMember(user);
-                    groupDataAccessObject.save(signupInputData.getGroup(), group);
-                } else {
-                    groupDataAccessObject.addMember(signupInputData.getGroup(), user);
-                    groupDataAccessObject.save(signupInputData.getGroup(), null);
+            try {
+                System.out.println(signupInputData.getLocation());
+                weatherDataAccsssObject.getWeather(signupInputData.getLocation());
+                User user = userFactory.create(signupInputData.getUsername(), signupInputData.getLocation(), null, signupInputData.getGroup());
+                if (!signupInputData.getGroup().equals("")){
+                    if (signupInputData.isNewGroup()) {
+                        Group group = groupFactory.create(signupInputData.getGroup(), new ArrayList<>(), LocalDateTime.now());
+                        group.addMember(user);
+                        groupDataAccessObject.save(signupInputData.getGroup(), group);
+                    } else {
+                        groupDataAccessObject.addMember(signupInputData.getGroup(), user);
+                        groupDataAccessObject.save(signupInputData.getGroup(), null);
+                    }
                 }
+                userDataAccessObject.save(user);
+                SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), LocalDateTime.now().toString(), signupInputData.getGroup(), false);
+                userPresenter.prepareSuccessView(signupOutputData);
+            }catch (Exception e){
+                userPresenter.prepareFailView("invalid location");
             }
-            userDataAccessObject.save(user);
 
-
-//            if (userDataAccessObject.existsByGroup(signupInputData.getGroup()) && !signupInputData.isNewGroup()) {
-//                user = userFactory.create(signupInputData.getUsername(), signupInputData.getLocation(),null,null);
-//                Group group = userDataAccessObject.getGroup(signupInputData.getGroup());
-//                group.addMember(user);
-//                userDataAccessObject.save(user);
-//            } else{
-//                user = userFactory.create(signupInputData.getUsername(), signupInputData.getLocation(),null,signupInputData.getGroup());
-//                Group group = groupFactory.create(signupInputData.getGroup(), user, now);
-//                userDataAccessObject.save(user);
-
-
-            SignupOutputData signupOutputData = new SignupOutputData(user.getUsername(), LocalDateTime.now().toString(), signupInputData.getGroup(), false);
-            userPresenter.prepareSuccessView(signupOutputData);
         }
         }
     }
