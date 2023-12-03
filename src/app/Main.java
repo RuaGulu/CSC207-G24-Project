@@ -24,7 +24,12 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-
+        if (SystemInfo.isMacOS){
+            System.setProperty("apple.laf.useScreenMenuBar","true");
+            System.setProperty("apple.awt.application.name","Weather System");
+            System.setProperty("apple.awt.application.appearance","system");
+        }
+        JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame application = new JFrame("system");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,7 +76,8 @@ public class Main {
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.setLocation(675,386);
+        application.setPreferredSize(new Dimension(500,400));
+        application.setLocation(636,333);
         application.pack();
         application.setVisible(true);
 
