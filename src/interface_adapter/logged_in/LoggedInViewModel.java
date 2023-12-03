@@ -12,6 +12,8 @@ public class LoggedInViewModel extends ViewModel {
 
     public static final String AIR_BUTTON = "Get Air Quality";
 
+    public static final String LOCATION_INPUT_FIELD = "location/IATA airport code";
+
     private LoggedInState state = new LoggedInState();
 
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
