@@ -8,6 +8,8 @@ public class LoginState {
 
     private String group = "";
 
+    private String keyName = "";
+
 
     public LoginState(LoginState copy){
         username = copy.username;
@@ -36,6 +38,12 @@ public class LoginState {
 
     public void setUsernameError(String usernameError) {
         this.usernameError = usernameError;
+    }
+    public void setKeyName (String text){
+        this.keyName = text;
+    }
+    public String getKeyName(){
+        return keyName;
     }
 
 }
