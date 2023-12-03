@@ -109,7 +109,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         //
                         currentState.setUsername(lastState.getUsername());
                         currentState.setLocation(lastState.getLocation());
-                        loginController.execute(currentState.getUsername(),null, lastState.getGroup(), "log in", lastState.getGroupCondition());
+                        loginController.execute(currentState.getUsername(),null, lastState.getGroup(), "log in", lastState.getGroupCondition(),currentState.getUsername());
 
 
                     }
