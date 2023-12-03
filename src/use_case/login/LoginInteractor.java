@@ -32,8 +32,12 @@ public class LoginInteractor implements LoginInputBoundary{
 
         LoginOutputData loginOutputData;
         if (!userDataAccessObject.existsByName(username) && condition != "sign up"){
-            loginPresenter.prepareFailView(username + ": Account does not exist");
-        }else if(condition == "sign up"){
+            loginPresenter.prepareFailView(username + " : Account does not exist");
+        }else if (groupDataAccessObject.existsByName(loginInputData.getGroupName()) && loginInputData.getGroupCondition() && condition != "sign up"){
+            loginPresenter.prepareFailView(loginInputData.getGroupName() + " : Group already exists");
+        }else if(!groupDataAccessObject.existsByName(loginInputData.getGroupName()) && !loginInputData.getGroupCondition() && condition != "sign up"){
+            loginPresenter.prepareFailView(loginInputData.getGroupName() + " : Group does not exist");
+        } else if(condition == "sign up"){
             loginOutputData = new LoginOutputData(username,location,loginInputData.getGroupName(),false);
             loginPresenter.prepareSuccessView(loginOutputData);}
         else{
