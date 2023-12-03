@@ -1,4 +1,5 @@
 package use_case.logged_in;
 
-public class LoggedInInteractor {
-}
+public class LoggedInInteractor implements LoggedInInputBoundary{
+
+    }
