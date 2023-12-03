@@ -9,7 +9,7 @@ public class SignupViewModel extends ViewModel{
 
     public static final String TITLE_LABEL = "Sign Up View";
     public static final String USERNAME_LABEL = "username";
-    public static final String LOCATION_LABEL = "location";
+    public static final String LOCATION_INPUT_LABEL = "location/IATA airport code ";
     public static final String SIGNUP_BUTTON_LABEL = "Sign up";
 
     public static final String SIGNUP_CREATE_GROUP_LABEL = "create group";

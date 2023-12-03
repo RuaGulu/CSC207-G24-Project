@@ -55,7 +55,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
         LabelTextPanel locationInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.LOCATION_LABEL), locationInputField);
+                new JLabel(SignupViewModel.LOCATION_INPUT_LABEL), locationInputField);
         LabelTextPanel createGroupInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.SIGNUP_CREATE_GROUP_LABEL), createGroupInputField);
         LabelTextPanel jointGroupInfo = new LabelTextPanel(

@@ -40,7 +40,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
     private final GroupController groupController;
     private final GroupViewModel groupViewModel;
 
-    private final JTextField usernameInputField = new JTextField(15);
+    private final JTextField locationInputField = new JTextField(15);
 
     private final JButton getWeather;
 
@@ -65,15 +65,20 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
 
         JLabel title = new JLabel(viewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        LabelTextPanel usernameInfo = new LabelTextPanel(new JLabel(), usernameInputField);
-        usernameInputField.addKeyListener(
+        LabelTextPanel locationInfo = new LabelTextPanel(
+                new JLabel(LoggedInViewModel.LOCATION_INPUT_FIELD), locationInputField);
+
+        locationInputField.addKeyListener(
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        WeatherState currentState = weatherViewModel.getState();
-                        String text = usernameInputField.getText() + e.getKeyChar();
-                        currentState.setLocation(text);
-                        weatherViewModel.setState(currentState);
+                        WeatherState weatherState = weatherViewModel.getState();
+                        AirQualityState airQualityState = airQualityViewModel.getState();
+                        String text = locationInputField.getText() + e.getKeyChar();
+                        weatherState.setLocation(text);
+                        airQualityState.setLocation(text);
+                        weatherViewModel.setState(weatherState);
+                        airQualityViewModel.setState(airQualityState);
 
                     }
 
@@ -90,7 +95,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
         );
 
         JPanel button = new JPanel();
-        getWeather = new JButton("Get Weather");
+        getWeather = new JButton(LoggedInViewModel.WEATHER_BUTTON);
         button.add(getWeather);
         getWeather.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -137,7 +142,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(usernameInfo);
+        this.add(locationInfo);
         this.add(button);
         this.setVisible(true);
 
