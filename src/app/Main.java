@@ -59,10 +59,10 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel,groupDataAccessObject );
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel,airQualityViewModel,groupDataAccessObject );
         views.add(signupView,signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel,groupDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel, airQualityViewModel,groupDataAccessObject);
         views.add(loginView,loginView.viewName);
 
         LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel,airQualityViewModel,loggedInUserDataAccessObject,weatherDataAccessObject,groupViewModel,groupDataAccessObject);
@@ -71,7 +71,8 @@ public class Main {
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.setLocation(675,386);
+        application.setPreferredSize(new Dimension(500,400));
+        application.setLocation(636,333);
         application.pack();
         application.setVisible(true);
 

@@ -1,6 +1,8 @@
 package view;
 
 import entity.Weather;
+import entity.AirQuality;
+import interface_adapter.air_quality.AirQualityPresenter;
 import interface_adapter.group.GroupController;
 import interface_adapter.group.GroupState;
 import interface_adapter.group.GroupViewModel;
@@ -184,11 +186,23 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
         if (loggedInState.getProperty() == "weather"){
             Weather weather = state.getWeather();
             String str = "Weather Condition: " + weather.getCondition() + "\n"
-                    + "Weather Temperature (C)" + weather.getTempC() + "\n"
-                    + "Weather Temperature (F)"+ weather.getTempF() + "\n"
-                    + "Local Time" + weather.getTime();
+                    + "Weather Temperature (C): " + weather.getTempC() + "\n"
+                    + "Weather Temperature (F): "+ weather.getTempF() + "\n"
+                    + "Local Time: " + weather.getTime();
 
             JOptionPane.showMessageDialog(this, str);
-    }
+        }
+        AirQualityState airState = airQualityViewModel.getState();
+        if (loggedInState.getProperty() == "airquality"){
+            AirQuality airQuality = airState.getAirQuality();
+            String str = "Carbon Monoxide (μg/m3): " + airQuality.getCo() + "\n"
+                    + "Ozone (μg/m3): " + airQuality.getO3() + "\n"
+                    + "Nitrogen Dioxide (μg/m3): " + airQuality.getNo2() + "\n"
+                    + "Sulphur Dioxide (μg/m3): " + airQuality.getSo2() + "\n"
+                    + "PM2.5 (μg/m3): " + airQuality.getPm2_5() + "\n"
+                    + "PM10 (μg/m3): " + airQuality.getPm10();
+
+            JOptionPane.showMessageDialog(this, str);
+        }
 }}
 

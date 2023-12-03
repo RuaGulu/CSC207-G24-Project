@@ -3,6 +3,7 @@ package app;
 import entity.CommonGroupFactory;
 import entity.GroupFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.air_quality.AirQualityViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -28,10 +29,11 @@ public class LoginUseCaseFactory {
             LoggedInViewModel loggedInViewModel,
             LoginUserDataAccessInterface userDataAccessObject,
             WeatherViewModel weatherViewModel,
+            AirQualityViewModel airQualityViewModel,
             GroupDataAccessInterface groupDataAccessObject) {
 
         try {
-            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,weatherViewModel,groupDataAccessObject);
+            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,weatherViewModel, airQualityViewModel,groupDataAccessObject);
             return new LoginView(loginController, loginViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -45,10 +47,11 @@ public class LoginUseCaseFactory {
             LoggedInViewModel loggedInViewModel,
             LoginUserDataAccessInterface userDataAccessObject,
             WeatherViewModel weatherViewModel,
+            AirQualityViewModel airQualityViewModel,
             GroupDataAccessInterface groupDataAccessObject) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
-        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel,weatherViewModel);
+        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel,weatherViewModel, airQualityViewModel);
 
         GroupFactory groupFactory = new CommonGroupFactory();
 
