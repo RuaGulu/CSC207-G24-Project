@@ -36,12 +36,33 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         JPanel button = new JPanel();
         login = new JButton(viewModel.LOGIN_BUTTON);
         button.add(login);
+        usernameInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        LoginState state = viewModel.getState();
+                        String text = usernameInputField.getText() + e.getKeyChar();
+                        state.setKeyName(text);
+                        viewModel.setState(state);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
+                    }
+                }
+        );
         login.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(login)) {
                             LoginState currentState = viewModel.getState();
-                            controller.execute(currentState.getUsername(),currentState.getLocation(),currentState.getGroup(), "sign up",false);
+                            controller.execute(currentState.getUsername(),currentState.getLocation(),currentState.getGroup(), "sign up",false, currentState.getKeyName());
                         }
                     }
                 }
