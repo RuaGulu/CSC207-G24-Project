@@ -5,6 +5,7 @@ import data_access.FilerUserDataAccessObject;
 import data_access.GroupDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.air_quality.AirQualityViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginState;
@@ -38,6 +39,7 @@ public class LoginTest {
     private WeatherViewModel weatherViewModel;
     private GroupDataAccessInterface groupDataAccessObject;
     private LoginState state = new LoginState();
+    private AirQualityViewModel airQualityViewModel;
 
     @Before
     public void init(){
@@ -54,7 +56,9 @@ public class LoginTest {
 
         weatherViewModel = new WeatherViewModel();
 
-        loginPresenter = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel, weatherViewModel);
+        airQualityViewModel = new AirQualityViewModel();
+
+        loginPresenter = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel, weatherViewModel, airQualityViewModel);
 
         userFactory = new CommonUserFactory();
 
