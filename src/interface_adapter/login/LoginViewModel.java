@@ -5,8 +5,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class LoginViewModel extends ViewModel {
-    public static final String TITLE_LABEL = "Login View";
-    public static final String USERNAME_LABEL = "Choose username";
+    public static final String TITLE_LABEL = "Log in";
+    public static final String USERNAME_LABEL = "username";
     public static final String LOGIN_BUTTON = "Log in";
 
     private LoginState state = new LoginState();
@@ -24,7 +24,7 @@ public class LoginViewModel extends ViewModel {
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("login", null, this.state);
 
     }
 

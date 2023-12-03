@@ -5,7 +5,11 @@ public class SignupState {
     private String username = "";
     private String usernameError = null;
     private String location = "";
+
+    private String group = "";
     private String locationError = null;
+
+    private boolean isNewGroup = true;
 
     public SignupState(SignupState copy) {
         username = copy.username;
@@ -41,11 +45,24 @@ public class SignupState {
         this.locationError = locationError;
     }
 
+    public void setGroup(String group){
+        this.group = group;
+    }
+
+    public String getGroup(){
+        return group;
+    }
+
+    public void joinGroup(){this.isNewGroup = false; }
+
+    public boolean getGroupCondition(){return isNewGroup;}
+
     @Override
     public String toString() {
         return "SignupState{" +
                 "username='" + username + '\'' +
                 ", location='" + location + '\'' +
+                ", group='" + group + '\'' +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
 package use_case.logged_in;
 
-public interface LoggedInUserDataAccessInterface {
+public interface LoggedInUserDataAccessinterface{
 }

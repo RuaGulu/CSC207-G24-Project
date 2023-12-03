@@ -1,7 +1,6 @@
 package use_case.Weather;
 
 import api.WeatherDB;
-import entity.CommonUser;
 
 
 public class WeatherInteractor implements WeatherInputBoundary{
@@ -19,6 +18,9 @@ public class WeatherInteractor implements WeatherInputBoundary{
 
     @Override
     public void execute(WeatherInputData weatherInputData) {
+        //
+        System.out.println(weatherInputData.getLocation());
+
         WeatherOutputData weatherOutputData = new WeatherOutputData(weatherDataAccesObject.getWeather(weatherInputData.getLocation()));
         weatherPresenter.prepareSuccessView(weatherOutputData);
     }

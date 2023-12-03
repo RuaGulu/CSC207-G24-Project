@@ -28,7 +28,6 @@ import use_case.group.GroupInteractor;
 import use_case.group.GroupOutputBoundary;
 import use_case.login.LoginUserDataAccessInterface;
 import view.LoggedinView;
-import api.WeatherDB;
 
 import javax.swing.*;
 import java.io.IOException;

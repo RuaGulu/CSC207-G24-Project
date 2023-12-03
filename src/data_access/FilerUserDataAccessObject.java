@@ -1,12 +1,11 @@
 package data_access;
 
-import entity.CommonUser;
 import entity.Group;
+import entity.GroupFactory;
 import entity.User;
 import entity.UserFactory;
-import use_case.create_group.GroupFindUserDataAccessInterface;
+import use_case.logged_in.LoggedInUserDataAccessinterface;
 import use_case.login.LoginUserDataAccessInterface;
-import use_case.search_usergroup.SearchGroupUserDataAccess;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
@@ -14,14 +13,18 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface, GroupFindUserDataAccessInterface, SearchGroupUserDataAccess {
+public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface, LoggedInUserDataAccessinterface{
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
     private final Map<String, User> accounts = new HashMap<>();
     private UserFactory userFactory;
 
-    public FilerUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException{
+    private GroupFactory groupFactory;
+
+    private final Map<String, Group>  groups = new HashMap<>();
+
+    public FilerUserDataAccessObject(String csvPath, UserFactory userFactory, GroupFactory groupFactory) throws IOException{
         this.userFactory = userFactory;
         csvFile = new File(csvPath);
         headers.put("username", 0);
@@ -53,9 +56,14 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
         return accounts.containsKey(identifier);
     }
 
+    @Override
+    public boolean existsByGroup(String identifier) {
+        return groups.containsKey(identifier);
+    }
+
 
     @Override
-    public void save(CommonUser user) {
+    public void save(User user) {
         accounts.put(user.getUsername(),user);
         this.save();
     }
@@ -64,14 +72,10 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
     public User get(String username) {
         return accounts.get(username);
     }
-    public void updateuser(String username, User updatedUser) {
 
-        // Update the group in the map
-        accounts.put(username, updatedUser);
+    public Group getGroup(String group){return groups.get(group);}
 
-        // Save the updated groups map to the CSV file
-        save();
-    }
+
     private void save() {
         BufferedWriter writer;
         try {
@@ -80,8 +84,15 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s,%s",
-                        user.getUsername(),user.getLocation());
+                String line;
+                if (user.getGroupName() != null){
+                    line = String.format("%s,%s",
+                            user.getUsername(),user.getLocation());
+                }else{
+                    line = String.format("%s,%s",
+                            user.getUsername(),user.getLocation());
+                }
+
                 writer.write(line);
                 writer.newLine();
             }
@@ -89,7 +100,10 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
             writer.close();
 
         } catch (IOException e) {
-            throw new RuntimeException("Failed to save user to CSV.", e);
+            throw new RuntimeException(e);
         }
     }
+
+
 }
+

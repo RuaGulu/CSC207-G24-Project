@@ -9,8 +9,8 @@ public class LoginController {
         this.userLoginUseCaseInteractor = userLoginUseCaseInteractor;
     }
 
-    public void execute(String username) {
-        LoginInputData loginInputData = new LoginInputData(username);
+    public void execute(String username, String location, String groupName, String condition, boolean groupCondition) {
+        LoginInputData loginInputData = new LoginInputData(username,location, groupName, condition, groupCondition);
 
         userLoginUseCaseInteractor.execute(loginInputData);
     }

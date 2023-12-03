@@ -1,8 +1,8 @@
 package interface_adapter.signup;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.ViewManagerModel;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
 
@@ -28,9 +28,11 @@ public class SignupPresenter implements SignupOutputBoundary{
     public void prepareSuccessView(SignupOutputData response) {
         LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
         response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
-
+        SignupState signupState = signupViewModel.getState();
         LoginState loginState = loginViewModel.getState();
         loginState.setUsername(response.getUsername());
+        loginState.setGroup(response.getGroupName());
+        loginState.setLocation(signupState.getLocation());
         this.loginViewModel.setState(loginState);
         loginViewModel.firePropertyChanged();
 
@@ -45,3 +47,4 @@ public class SignupPresenter implements SignupOutputBoundary{
         signupViewModel.firePropertyChanged();
     }
 }
+

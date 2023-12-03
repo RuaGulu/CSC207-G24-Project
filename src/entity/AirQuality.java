@@ -56,8 +56,8 @@ public class AirQuality {
             return this;
         }
         public AirQualityBuilder pm2_5(int pm2_5) {
-           this.pm2_5 = pm2_5;
-           return this;
+            this.pm2_5 = pm2_5;
+            return this;
         }
         public AirQualityBuilder pm10(int pm10) {
             this.pm10 = pm10;
