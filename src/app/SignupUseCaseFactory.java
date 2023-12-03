@@ -32,10 +32,10 @@ public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {}
 
     public static SignupView create(
-            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject, LoginUserDataAccessInterface loginuserDataAccessObject, LoggedInViewModel loggedInViewModel, WeatherViewModel weatherViewModel, AirQualityViewModel airQualityViewModel,GroupDataAccessInterface groupDataAccessInterface) {
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject, LoginUserDataAccessInterface loginuserDataAccessObject, LoggedInViewModel loggedInViewModel, WeatherViewModel weatherViewModel, AirQualityViewModel airQualityViewModel,GroupDataAccessInterface groupDataAccessInterface, WeatherDB weatherDadaAccessObject) {
 
         try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject,groupDataAccessInterface);
+            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject,groupDataAccessInterface, weatherDadaAccessObject);
             LoginController loginController = createUserLoginUseCase(viewManagerModel,loggedInViewModel,loginViewModel,loginuserDataAccessObject, weatherViewModel, airQualityViewModel,groupDataAccessInterface);
             return new SignupView(signupController, signupViewModel, loginController, loginViewModel);
         } catch (IOException e) {
@@ -44,7 +44,7 @@ public class SignupUseCaseFactory {
 
         return null;
     }
-    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject, GroupDataAccessInterface groupDataAccessInterface) throws IOException {
+    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject, GroupDataAccessInterface groupDataAccessInterface, WeatherDB weatherDadaAccessObject) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
@@ -54,7 +54,7 @@ public class SignupUseCaseFactory {
         GroupFactory groupFactory = new CommonGroupFactory();
 
         SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory,groupFactory,groupDataAccessInterface);
+                userDataAccessObject, signupOutputBoundary, userFactory,groupFactory,groupDataAccessInterface, weatherDadaAccessObject);
 
         return new SignupController(userSignupInteractor);
     }
