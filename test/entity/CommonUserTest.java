@@ -8,12 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class CommonUserTest {
 
     private CommonUser user;
-    private Group group;
 
     @BeforeEach
     void init() {
         user = new CommonUser(
-                "TestUser", "Toronto", "Calgary", group);
+                "TestUser", "Toronto", "Calgary", "group2");
     }
 
     @Test
