@@ -33,7 +33,7 @@ public class LoginPresenter implements LoginOutputBoundary {
 
 
         //
-        System.out.println("到达login presenter");
+        System.out.println("Arrived in login presenter");
         System.out.println(response.getUsername());
         System.out.println(loginState.getLocation());
 

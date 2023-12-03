@@ -19,7 +19,7 @@ public class GroupPresenter implements GroupOutputBoundary {
 
     public void prepareSuccessView(GroupOutputData groupOutputData) {
         //
-        System.out.println("到达group presenter");
+        System.out.println("Arrived group presenter");
 
         GroupState state = groupViewModel.getState();
         state.setData(groupOutputData.getData());

@@ -1,5 +1,6 @@
 package app;
 
+import com.formdev.flatlaf.util.SystemInfo;
 import api.APIDataAccessObject;
 import api.WeatherDB;
 import data_access.FilerUserDataAccessObject;
@@ -24,6 +25,12 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
+        if (SystemInfo.isMacOS){
+            System.setProperty("apple.laf.useScreenMenuBar","true");
+            System.setProperty("apple.awt.application.name","Weather System");
+            System.setProperty("apple.awt.application.appearance","system");
+        }
+        JFrame.setDefaultLookAndFeelDecorated(true);
 
         JFrame application = new JFrame("system");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -71,7 +78,7 @@ public class Main {
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
-        application.setPreferredSize(new Dimension(500,400));
+        application.setPreferredSize(new Dimension(450,350));
         application.setLocation(636,333);
         application.pack();
         application.setVisible(true);

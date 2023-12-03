@@ -4,7 +4,7 @@ import entity.Group;
 import entity.GroupFactory;
 import entity.User;
 import entity.UserFactory;
-import use_case.logged_in.LoggedInUserDataAccessinterface;
+import use_case.logged_in.LoggedInUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 

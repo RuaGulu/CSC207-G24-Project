@@ -4,7 +4,7 @@ import entity.Group;
 import entity.GroupFactory;
 import entity.User;
 import entity.UserFactory;
-import use_case.logged_in.LoggedInUserDataAccessinterface;
+import use_case.logged_in.LoggedInUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface, LoggedInUserDataAccessinterface{
+public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface, LoggedInUserDataAccessInterface{
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();

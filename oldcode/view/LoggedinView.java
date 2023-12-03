@@ -153,7 +153,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         //
-        System.out.println("到达loggedinview");
+        System.out.println("Arrived in loggedinview");
         System.out.println(evt.getPropertyName());
         System.out.println(evt.getNewValue().getClass());
 

@@ -18,6 +18,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
+
     public final String viewName = "sign up";
 
     private final SignupViewModel signupViewModel;
@@ -40,7 +41,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JButton logIn;
 
     public SignupView(SignupController controller, SignupViewModel signupViewModel, LoginController loginController, LoginViewModel loginViewModel) {
-
+        FlatDarkLaf.setup();
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
@@ -68,6 +69,13 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         signUp.setContentAreaFilled(false);
 
         logIn = new JButton(LoginViewModel.TITLE_LABEL);
+
+        UIManager.put("Button.arc",999);
+        usernameInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
+        locationInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
+        createGroupInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
+        joinGroupInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
+
 
 
 
