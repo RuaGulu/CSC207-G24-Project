@@ -1,11 +1,10 @@
 package use_case.group;
 
 import api.WeatherDB;
-import entity.Group;
-import entity.GroupFactory;
-import entity.User;
-import entity.Weather;
+import entity.*;
+import use_case.logged_in.LoggedInUserDataAccessinterface;
 import use_case.login.LoginUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;

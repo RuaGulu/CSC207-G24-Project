@@ -5,7 +5,6 @@ import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.Weather.WeatherOutputBoundary;
 import use_case.Weather.WeatherOutputData;
-import interface_adapter.air_quality.AirQualityState;
 
 public class WeatherPresenter implements WeatherOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;

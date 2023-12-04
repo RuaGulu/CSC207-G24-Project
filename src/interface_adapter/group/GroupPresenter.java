@@ -1,6 +1,7 @@
 package interface_adapter.group;
 
 import interface_adapter.ViewManagerModel;
+
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.group.GroupOutputBoundary;
@@ -19,7 +20,7 @@ public class GroupPresenter implements GroupOutputBoundary {
 
     public void prepareSuccessView(GroupOutputData groupOutputData) {
         //
-        System.out.println("Arrived group presenter");
+        System.out.println("到达group presenter");
 
         GroupState state = groupViewModel.getState();
         state.setData(groupOutputData.getData());

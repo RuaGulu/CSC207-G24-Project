@@ -5,3 +5,4 @@ public interface LoginOutputBoundary {
 
     void prepareFailView(String error);
 }
+

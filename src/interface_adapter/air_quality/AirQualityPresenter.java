@@ -5,18 +5,17 @@ import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.air_quality.AirQualityOutputBoundary;
 import use_case.air_quality.AirQualityOutputData;
-import use_case.logged_in.LoggedInOutputData;
 
 public class AirQualityPresenter implements AirQualityOutputBoundary {
-
-    private final LoggedInViewModel loggedInViewModel;
     private final AirQualityViewModel viewModel;
     private final ViewManagerModel viewManagerModel;
+    private final LoggedInViewModel loggedInViewModel;
 
     public AirQualityPresenter(ViewManagerModel viewManagerModel, AirQualityViewModel airQualityViewModel, LoggedInViewModel loggedInViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.viewModel = airQualityViewModel;
         this.loggedInViewModel = loggedInViewModel;
+
     }
 
     @Override

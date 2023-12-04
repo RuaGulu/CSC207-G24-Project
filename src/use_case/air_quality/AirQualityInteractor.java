@@ -1,9 +1,6 @@
 package use_case.air_quality;
 
 import api.WeatherDB;
-import entity.AirQuality;
-import entity.Weather;
-import use_case.Weather.WeatherOutputBoundary;
 
 public class AirQualityInteractor implements AirQualityInputBoundary{
 

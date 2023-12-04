@@ -4,6 +4,7 @@ import entity.Group;
 import entity.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface GroupDataAccessInterface {
     ArrayList getGroups(String userName);

@@ -20,6 +20,7 @@ public class SignupInteractor implements SignupInputBoundary{
     final GroupFactory groupFactory;
 
     final GroupDataAccessInterface groupDataAccessObject;
+
     final WeatherDB weatherDataAccsssObject;
 
     public SignupInteractor(SignupUserDataAccessInterface signupUserDataAccessInterface,
@@ -27,7 +28,7 @@ public class SignupInteractor implements SignupInputBoundary{
                             UserFactory userFactory,
                             GroupFactory groupFactory,
                             GroupDataAccessInterface groupDataAccessObject,
-                           WeatherDB weatherDataAccsssObject) {
+                            WeatherDB weatherDataAccsssObject) {
         this.userDataAccessObject = signupUserDataAccessInterface;
         this.userPresenter = signupOutputBoundary;
         this.userFactory = userFactory;
@@ -47,7 +48,8 @@ public class SignupInteractor implements SignupInputBoundary{
             //
             System.out.println(signupInputData.isNewGroup());
             userPresenter.prepareFailView("Group does not exist");
-        } else {
+        }
+        else{
             try {
                 System.out.println(signupInputData.getLocation());
                 weatherDataAccsssObject.getWeather(signupInputData.getLocation());
@@ -68,7 +70,6 @@ public class SignupInteractor implements SignupInputBoundary{
             }catch (Exception e){
                 userPresenter.prepareFailView("invalid location");
             }
-
         }
         }
     }

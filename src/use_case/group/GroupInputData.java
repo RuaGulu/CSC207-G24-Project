@@ -1,5 +1,11 @@
 package use_case.group;
 
+import entity.Group;
+import entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class GroupInputData {
     final private String user;
 

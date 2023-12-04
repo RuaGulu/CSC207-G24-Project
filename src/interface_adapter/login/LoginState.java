@@ -39,6 +39,7 @@ public class LoginState {
     public void setUsernameError(String usernameError) {
         this.usernameError = usernameError;
     }
+
     public void setKeyName (String text){
         this.keyName = text;
     }
