@@ -51,4 +51,10 @@ public class WeatherTest {
         assertEquals("Sunny", weather.getCondition());
     }
 
+    @Test
+    public void testToString(){
+        System.out.println(weather.toString());
+        assertEquals(weather.toString(), "Weather{location=London', time=2023-12-01 10:00', tempC=15', tempF=59', condition=Sunny'}");
+    }
+
 }

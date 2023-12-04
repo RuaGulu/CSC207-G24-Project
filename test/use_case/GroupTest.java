@@ -14,6 +14,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.jupiter.api.BeforeEach;
 import use_case.group.GroupDataAccessInterface;
 import use_case.group.GroupInputData;
 import use_case.group.GroupInteractor;
@@ -67,8 +68,8 @@ public class GroupTest {
 
         groupPresenter = new GroupPresenter(viewManagerModel, groupViewModel, loggedInViewModel);
 
-        testuser = new CommonUser(user2, "Toronto", "Toronto", group1);
-        getUser.save(new CommonUser(user1, "London", "Toronto", group1));
+        testuser = new CommonUser(user2, "Toronto", "Toronto", "usersignuptestgroup");
+        getUser.save(new CommonUser(user1, "London", "Toronto", "usersignuptestgroup"));
         getUser.save(testuser);
 
         groupFactory = new CommonGroupFactory();
@@ -76,8 +77,9 @@ public class GroupTest {
     }
 
     @Test
-    public void addUser() {
+    public void addUserTwice() {
         GroupInputData groupInputData = new GroupInputData(user1, "Toronto");
+        groupInteractor.execute(groupInputData);
         groupInteractor.execute(groupInputData);
         assert (getUser.existsByName(user1));
         assert (loggedInViewModel.getState().getProperty().equals("group"));
