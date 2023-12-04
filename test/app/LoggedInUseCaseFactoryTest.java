@@ -55,7 +55,7 @@ public class LoggedInUseCaseFactoryTest {
 
     @Test
     public void loginViewCreateTest(){
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedInViewModel,loginUserDataAccessInterface,weatherViewModel, airQualityViewModel,groupDataAccessInterface);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedInViewModel,loginUserDataAccessInterface,weatherViewModel,groupDataAccessInterface,airQualityViewModel);
         assertTrue("Test completed successfully", true);
     }
 }

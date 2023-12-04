@@ -19,13 +19,15 @@ import use_case.login.LoginInputData;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 
 
 import java.io.IOException;
 
 public class LoginTest {
 
-    private LoginUserDataAccessInterface userDataAccessObject;
+    private LoginUserDataAccessInterface userDataAccessObject1;
+    private SignupUserDataAccessInterface userDataAccessObject;
     private LoginOutputBoundary loginPresenter;
 
     private LoginInteractor loginInteractor;
@@ -44,6 +46,7 @@ public class LoginTest {
     @Before
     public void init(){
         try {
+            userDataAccessObject1 = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(), new CommonGroupFactory());
             userDataAccessObject = new FilerUserDataAccessObject("./users.csv", new CommonUserFactory(), new CommonGroupFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -69,7 +72,7 @@ public class LoginTest {
         }
 
         groupFactory = new CommonGroupFactory();
-        loginInteractor = new LoginInteractor(userDataAccessObject, loginPresenter, groupFactory, groupDataAccessObject);
+        loginInteractor = new LoginInteractor(userDataAccessObject1, loginPresenter, groupFactory, groupDataAccessObject);
         CommonUser existingUser = new CommonUser(user1, "Toronto", "Toronto", "testgroup2");
         userDataAccessObject.save(existingUser);
     }

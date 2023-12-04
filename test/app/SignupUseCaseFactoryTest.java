@@ -60,7 +60,7 @@ public class SignupUseCaseFactoryTest {
     }
     @Test
     public void signupViewCreateTest(){
-        SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginuserDataAccessObject, loggedInViewModel,weatherViewModel,airQualityViewModel,groupDataAccessInterface,weatherDataAccessObject );
+        SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginuserDataAccessObject, loggedInViewModel,weatherViewModel,groupDataAccessInterface,airQualityViewModel,weatherDataAccessObject );
         assertTrue("Test completed successfully", true);
     }
 }
