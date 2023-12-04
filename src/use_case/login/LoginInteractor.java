@@ -1,5 +1,6 @@
 package use_case.login;
 
+import data_access.GroupDataAccessObject;
 import entity.Group;
 import entity.GroupFactory;
 import entity.User;
@@ -38,8 +39,13 @@ public class LoginInteractor implements LoginInputBoundary{
         }else if(!groupDataAccessObject.existsByName(loginInputData.getGroupName()) && !loginInputData.getGroupCondition() && condition != "sign up"){
             loginPresenter.prepareFailView(loginInputData.getGroupName() + " : Group does not exist");
         } else if(condition == "sign up"){
-            loginOutputData = new LoginOutputData(username,location,loginInputData.getGroupName(),false);
-            loginPresenter.prepareSuccessView(loginOutputData);}
+            if (!userDataAccessObject.existsByName(loginInputData.getKeyValue())){
+                loginPresenter.prepareFailView("invalid userName");
+            }else{
+                User user = userDataAccessObject.get(loginInputData.getKeyValue());
+                loginOutputData = new LoginOutputData(loginInputData.getKeyValue(),user.getLocation(),user.getGroupName(),false);
+                loginPresenter.prepareSuccessView(loginOutputData);}
+            }
         else{
             if (!loginInputData.getGroupName().equals("")){
                 if (loginInputData.getGroupCondition()) {
