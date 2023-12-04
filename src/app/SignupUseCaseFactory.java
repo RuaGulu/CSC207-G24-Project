@@ -1,5 +1,6 @@
 package app;
 
+import api.WeatherDB;
 import entity.CommonGroupFactory;
 import entity.CommonUserFactory;
 import entity.GroupFactory;

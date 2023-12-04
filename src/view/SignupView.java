@@ -1,5 +1,6 @@
 package view;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;

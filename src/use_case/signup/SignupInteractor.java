@@ -1,5 +1,6 @@
 package use_case.signup;
 
+import api.WeatherDB;
 import entity.Group;
 import entity.GroupFactory;
 import entity.User;
@@ -19,7 +20,7 @@ public class SignupInteractor implements SignupInputBoundary{
     final GroupFactory groupFactory;
 
     final GroupDataAccessInterface groupDataAccessObject;
-    final WeatherDB weatherDataAccsssObject
+    final WeatherDB weatherDataAccsssObject;
 
     public SignupInteractor(SignupUserDataAccessInterface signupUserDataAccessInterface,
                             SignupOutputBoundary signupOutputBoundary,
