@@ -4,16 +4,16 @@ import entity.Group;
 import entity.GroupFactory;
 import entity.User;
 import entity.UserFactory;
-import use_case.logged_in.LoggedInUserDataAccessInterface;
+import use_case.group.GroupDataAccessInterface;
+import use_case.logged_in.LoggedInUserDataAccessinterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
-public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface, LoggedInUserDataAccessInterface{
+public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface, LoggedInUserDataAccessinterface{
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -53,6 +53,7 @@ public class FilerUserDataAccessObject implements LoginUserDataAccessInterface, 
 
     @Override
     public boolean existsByName(String identifier) {
+
         return accounts.containsKey(identifier);
     }
 

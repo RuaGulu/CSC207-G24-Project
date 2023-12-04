@@ -1,8 +1,6 @@
 package view;
 
 import entity.Weather;
-import entity.AirQuality;
-import interface_adapter.air_quality.AirQualityPresenter;
 import interface_adapter.group.GroupController;
 import interface_adapter.group.GroupState;
 import interface_adapter.group.GroupViewModel;
@@ -24,6 +22,9 @@ import java.util.HashMap;
 import interface_adapter.air_quality.AirQualityController;
 import interface_adapter.air_quality.AirQualityState;
 import interface_adapter.air_quality.AirQualityViewModel;
+
+import entity.AirQuality;
+import interface_adapter.air_quality.AirQualityPresenter;
 
 public class LoggedinView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "logged in";
@@ -72,12 +73,12 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        WeatherState weatherState = weatherViewModel.getState();
+                        WeatherState currentState = weatherViewModel.getState();
                         AirQualityState airQualityState = airQualityViewModel.getState();
                         String text = locationInputField.getText() + e.getKeyChar();
-                        weatherState.setLocation(text);
+                        currentState.setLocation(text);
                         airQualityState.setLocation(text);
-                        weatherViewModel.setState(weatherState);
+                        weatherViewModel.setState(currentState);
                         airQualityViewModel.setState(airQualityState);
 
                     }
@@ -106,7 +107,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
                         weatherController.execute(currentState.getLocation());
 
 
-                        }
+                    }
 
                 }
         );
@@ -174,7 +175,7 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
             String str = "";
             for (String groupName : data.keySet()){
                 HashMap<String,Weather> users = data.get(groupName);
-                str += "Group " + groupName + " : " + "\n";
+                str += "\n" + "Group " + groupName + " : " + "\n";
                 for(String user : users.keySet()){
                     str += user + " : " + users.get(user).getLocation() + "\n"
                             + "Weather Condition: " + users.get(user).getCondition() + "\n"
@@ -191,9 +192,9 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
         if (loggedInState.getProperty() == "weather"){
             Weather weather = state.getWeather();
             String str = "Weather Condition: " + weather.getCondition() + "\n"
-                    + "Weather Temperature (C): " + weather.getTempC() + "\n"
-                    + "Weather Temperature (F): "+ weather.getTempF() + "\n"
-                    + "Local Time: " + weather.getTime();
+                    + "Weather Temperature (C)" + weather.getTempC() + "\n"
+                    + "Weather Temperature (F)"+ weather.getTempF() + "\n"
+                    + "Local Time" + weather.getTime();
 
             JOptionPane.showMessageDialog(this, str);
         }
@@ -209,5 +210,5 @@ public class LoggedinView extends JPanel implements ActionListener, PropertyChan
 
             JOptionPane.showMessageDialog(this, str);
         }
-}}
+    }}
 

@@ -1,7 +1,6 @@
 package app;
 
-import entity.CommonGroupFactory;
-import entity.GroupFactory;
+import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.air_quality.AirQualityViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -29,11 +28,11 @@ public class LoginUseCaseFactory {
             LoggedInViewModel loggedInViewModel,
             LoginUserDataAccessInterface userDataAccessObject,
             WeatherViewModel weatherViewModel,
-            AirQualityViewModel airQualityViewModel,
-            GroupDataAccessInterface groupDataAccessObject) {
+            GroupDataAccessInterface groupDataAccessObject,
+            AirQualityViewModel airQualityViewModel) {
 
         try {
-            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,weatherViewModel, airQualityViewModel,groupDataAccessObject);
+            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject,weatherViewModel,groupDataAccessObject,airQualityViewModel);
             return new LoginView(loginController, loginViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -47,11 +46,11 @@ public class LoginUseCaseFactory {
             LoggedInViewModel loggedInViewModel,
             LoginUserDataAccessInterface userDataAccessObject,
             WeatherViewModel weatherViewModel,
-            AirQualityViewModel airQualityViewModel,
-            GroupDataAccessInterface groupDataAccessObject) throws IOException {
+            GroupDataAccessInterface groupDataAccessObject,
+            AirQualityViewModel airQualityViewModel) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
-        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel,weatherViewModel, airQualityViewModel);
+        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel,weatherViewModel,airQualityViewModel);
 
         GroupFactory groupFactory = new CommonGroupFactory();
 

@@ -1,8 +1,8 @@
 package app;
 
-import com.formdev.flatlaf.util.SystemInfo;
 import api.APIDataAccessObject;
 import api.WeatherDB;
+import com.formdev.flatlaf.util.SystemInfo;
 import data_access.FilerUserDataAccessObject;
 import data_access.GroupDataAccessObject;
 import entity.CommonGroupFactory;
@@ -14,6 +14,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.weather.WeatherViewModel;
+import use_case.group.GroupDataAccessInterface;
 import view.LoggedinView;
 import view.LoginView;
 import view.SignupView;
@@ -31,9 +32,10 @@ public class Main {
             System.setProperty("apple.awt.application.appearance","system");
         }
         JFrame.setDefaultLookAndFeelDecorated(true);
-
         JFrame application = new JFrame("system");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+
 
         CardLayout cardLayout = new CardLayout();
 
@@ -47,8 +49,8 @@ public class Main {
         LoggedInViewModel loggedinViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         WeatherViewModel weatherViewModel = new WeatherViewModel();
-        AirQualityViewModel airQualityViewModel = new AirQualityViewModel();
         GroupViewModel groupViewModel = new GroupViewModel();
+        AirQualityViewModel airQualityViewModel = new AirQualityViewModel();
 
         FilerUserDataAccessObject userDataAccessObject;
         FilerUserDataAccessObject loginUserDataAccessObject;
@@ -66,10 +68,10 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel,airQualityViewModel,groupDataAccessObject,weatherDataAccessObject );
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loginUserDataAccessObject, loggedinViewModel,weatherViewModel,groupDataAccessObject,airQualityViewModel,weatherDataAccessObject );
         views.add(signupView,signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel, airQualityViewModel,groupDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel,loginViewModel,loggedinViewModel,loginUserDataAccessObject,weatherViewModel,groupDataAccessObject,airQualityViewModel);
         views.add(loginView,loginView.viewName);
 
         LoggedinView loggedinView = LoggedInUseCaseFactory.create(viewManagerModel,loggedinViewModel,weatherViewModel,airQualityViewModel,loggedInUserDataAccessObject,weatherDataAccessObject,groupViewModel,groupDataAccessObject);

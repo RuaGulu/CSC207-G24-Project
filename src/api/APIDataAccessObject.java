@@ -42,9 +42,9 @@ public class APIDataAccessObject implements WeatherDB {
                 JSONObject current = responseBody.getJSONObject("current");
                 return Weather.builder()
                         .location(loc.getString("name"))
-                        .time(loc.getString("localtime"))
                         .tempC(current.getInt("temp_c"))
                         .tempF(current.getInt("temp_f"))
+                        .time(loc.getString("localtime"))
                         .condition(current.getJSONObject("condition").getString("text"))
                         .build();
 

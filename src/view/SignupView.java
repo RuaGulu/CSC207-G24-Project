@@ -19,7 +19,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
-
     public final String viewName = "sign up";
 
     private final SignupViewModel signupViewModel;
@@ -51,8 +50,26 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.loginViewModel = loginViewModel;
         loginViewModel.addPropertyChangeListener(this);
 
-        JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        System.setProperty( "apple.swing.application.appearance", "system" );
+        System.setProperty( "apple.awt.application.appearance", "system" );
+
+        UIManager.put("Button.arc",999);
+        UIManager.put("Component.arc",999);
+        UIManager.put("JComponent.arc",999);
+
+        usernameInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
+        locationInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
+        createGroupInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
+        joinGroupInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
+
+
+
+
+
+
+
+//        JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
+//        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
@@ -63,19 +80,11 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         LabelTextPanel jointGroupInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.SIGNUP_JOIN_GROUP_LABEL), joinGroupInputField);
 
+
         // buttons
         JPanel buttons = new JPanel();
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
-        signUp.setPreferredSize(new Dimension(80,30));
-        signUp.setContentAreaFilled(false);
-
         logIn = new JButton(LoginViewModel.TITLE_LABEL);
-
-        UIManager.put("Button.arc",999);
-        usernameInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
-        locationInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
-        createGroupInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
-        joinGroupInputField.setFont( UIManager.getFont( "h3.regular.font" ) );
 
 
 
@@ -110,6 +119,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                         //
                         currentState.setUsername(lastState.getUsername());
                         currentState.setLocation(lastState.getLocation());
+
                         loginController.execute(currentState.getUsername(),null, lastState.getGroup(), "log in", lastState.getGroupCondition(),currentState.getUsername());
 
 
@@ -211,12 +221,15 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 
-        this.add(title);
+//        this.add(title);
         this.add(usernameInfo);
         this.add(locationInfo);
         this.add(createGroupInfo);
         this.add(jointGroupInfo);
-        this.add(buttons);}
+        this.add(buttons);
+        }
+
+
 
     public void actionPerformed(ActionEvent evt) {
         JOptionPane.showConfirmDialog(this, "Cancel not implemented yet.");

@@ -7,6 +7,7 @@ import entity.GroupFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.air_quality.AirQualityViewModel;
+import interface_adapter.logged_in.LoggedInController;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -33,11 +34,11 @@ public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {}
 
     public static SignupView create(
-            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject, LoginUserDataAccessInterface loginuserDataAccessObject, LoggedInViewModel loggedInViewModel, WeatherViewModel weatherViewModel, AirQualityViewModel airQualityViewModel,GroupDataAccessInterface groupDataAccessInterface, WeatherDB weatherDadaAccessObject) {
+            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface userDataAccessObject, LoginUserDataAccessInterface loginuserDataAccessObject, LoggedInViewModel loggedInViewModel, WeatherViewModel weatherViewModel, GroupDataAccessInterface groupDataAccessInterface,AirQualityViewModel airQualityViewModel,WeatherDB weatherDadaAccessObject) {
 
         try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject,groupDataAccessInterface, weatherDadaAccessObject);
-            LoginController loginController = createUserLoginUseCase(viewManagerModel,loggedInViewModel,loginViewModel,loginuserDataAccessObject, weatherViewModel, airQualityViewModel,groupDataAccessInterface);
+            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject,groupDataAccessInterface,weatherDadaAccessObject);
+            LoginController loginController = createUserLoginUseCase(viewManagerModel,loggedInViewModel,loginViewModel,loginuserDataAccessObject, weatherViewModel,groupDataAccessInterface,airQualityViewModel);
             return new SignupView(signupController, signupViewModel, loginController, loginViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
@@ -55,14 +56,14 @@ public class SignupUseCaseFactory {
         GroupFactory groupFactory = new CommonGroupFactory();
 
         SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory,groupFactory,groupDataAccessInterface, weatherDadaAccessObject);
+                userDataAccessObject, signupOutputBoundary, userFactory,groupFactory,groupDataAccessInterface,weatherDadaAccessObject);
 
         return new SignupController(userSignupInteractor);
     }
-    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, LoginViewModel loginViewModel, LoginUserDataAccessInterface loginUserDataAccessObject, WeatherViewModel weatherViewModel, AirQualityViewModel airQualityViewModel, GroupDataAccessInterface groupDataAccessInterface) throws IOException {
+    private static LoginController createUserLoginUseCase(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel, LoginViewModel loginViewModel, LoginUserDataAccessInterface loginUserDataAccessObject, WeatherViewModel weatherViewModel, GroupDataAccessInterface groupDataAccessInterface, AirQualityViewModel airQualityViewModel) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
-        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,loggedInViewModel,loginViewModel,weatherViewModel, airQualityViewModel);
+        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,loggedInViewModel,loginViewModel,weatherViewModel,airQualityViewModel);
 
         GroupFactory groupFactory = new CommonGroupFactory();
 

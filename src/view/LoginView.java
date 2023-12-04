@@ -1,5 +1,6 @@
 package view;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -27,6 +28,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
 
     public LoginView(LoginController controller,LoginViewModel viewModel){
+        FlatDarkLaf.setup();
         this.controller = controller;
         this.viewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
@@ -64,6 +66,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(login)) {
                             LoginState currentState = viewModel.getState();
+                            System.out.println(currentState.getUsername());
+                            System.out.println(currentState.getKeyName());
                             controller.execute(currentState.getUsername(),currentState.getLocation(),currentState.getGroup(), "sign up",false, currentState.getKeyName());
                         }
                     }
@@ -90,5 +94,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         //
         System.out.println("Arrived in login view");
         LoginState state = (LoginState) evt.getNewValue();
+        if (state.getUsernameError() != null) {
+            JOptionPane.showMessageDialog(this, state.getUsernameError());
+        }
     }
 }
