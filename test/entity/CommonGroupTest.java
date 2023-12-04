@@ -49,4 +49,15 @@ class CommonGroupTest {
     void getCreationTime() {
         assertEquals(now, group.getCreationTime());
     }
+    @Test
+    void getLocationTest(){
+        System.out.println(group.getLocations());
+        assert(group.getLocations().contains("Toronto"));
+    }
+    @Test
+    void containUserTest(){
+        assertTrue(group.containUser("TestUser1"));
+        assertFalse(group.containUser("Userabcd"));
+    }
+
 }

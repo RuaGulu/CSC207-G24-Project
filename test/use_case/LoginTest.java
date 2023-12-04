@@ -75,20 +75,56 @@ public class LoginTest {
     }
     @Test
     public void validInput(){
-        LoginInputData loginInputData = new LoginInputData(user1,"Toronto", "", "log in", false);
+        LoginInputData loginInputData = new LoginInputData(user1,"Toronto", "", "log in", true,user1);
+        loginInteractor.execute(loginInputData);
+        assert(loggedInViewModel.getState().getUsername().equals(user1));
+    }
+    @Test
+    public void groupNameNotEmpty1(){
+        LoginInputData loginInputData = new LoginInputData(user1,"Toronto", "usersignuptestgroup", "log in", false,user1);
+        loginInteractor.execute(loginInputData);
+        assert(loggedInViewModel.getState().getUsername().equals(user1));
+    }
+    @Test
+    public void groupNameNotEmpty2(){
+        LoginInputData loginInputData = new LoginInputData(user1,"Toronto", "aaaa", "log in", true,user1);
+        loginInteractor.execute(loginInputData);
+        assert(loggedInViewModel.getState().getUsername().equals(user1));
+    }
+    @Test
+    public void signupSuccess1(){
+        LoginInputData loginInputData = new LoginInputData("abcd","Toronto", "usersignuptestgroup", "sign up", false,"abcd");
+        loginInteractor.execute(loginInputData);
+        assert(loggedInViewModel.getState().getUsername().equals("abcd"));
+    }
+    @Test
+    public void signupSuccess2(){
+        LoginInputData loginInputData = new LoginInputData("abcd","Toronto", "usersignuptestgroup", "sign up", false,user1);
         loginInteractor.execute(loginInputData);
         assert(loggedInViewModel.getState().getUsername().equals(user1));
     }
     @Test
     public void accountnotexist(){
-        LoginInputData loginInputData = new LoginInputData(user2, "Toronto", "inputgroup", "sign up", false);
+        LoginInputData loginInputData = new LoginInputData("abcd", "Toronto", "inputgroup", "sign up", false, user2);
         loginInteractor.execute(loginInputData);
-        assert(loggedInViewModel.getState().getUsername().equals(user2));
+        assert(loginViewModel.getState().getUsernameError().equals("invalid userName"));
     }
     @Test
     public void invalidInput(){
-        LoginInputData loginInputData = new LoginInputData(user2, "Toronto", "inputgroup", "log in", false);
+        LoginInputData loginInputData = new LoginInputData(user2, "Toronto", "inputgroup", "log in", false, user2);
         loginInteractor.execute(loginInputData);
-        assert(loginViewModel.getState().getUsernameError().equals("User8: Account does not exist"));
+        assert(loginViewModel.getState().getUsernameError().equals("User8 : Account does not exist"));
+    }
+    @Test
+    public void groupExists(){
+        LoginInputData loginInputData = new LoginInputData(user1, "Toronto", "usersignuptestgroup", "log in", true, user1);
+        loginInteractor.execute(loginInputData);
+        assert(loginViewModel.getState().getUsernameError().equals("usersignuptestgroup : Group already exists"));
+    }
+    @Test
+    public void groupNotExists(){
+        LoginInputData loginInputData = new LoginInputData(user1, "Toronto", "abcd", "log in", false, user1);
+        loginInteractor.execute(loginInputData);
+        assert(loginViewModel.getState().getUsernameError().equals("abcd : Group does not exist"));
     }
 }
